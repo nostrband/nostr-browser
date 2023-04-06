@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
+import { TabPage } from './components/TabPage';
 
 function App() {
   return (
     <div className="App">
-      <div>Start application</div>
+      <TabPage />
     </div>
   );
 }

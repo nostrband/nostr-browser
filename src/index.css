@@ -3,3 +3,14 @@
   line-height: 1.5;
   font-weight: 400;
 }
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+}

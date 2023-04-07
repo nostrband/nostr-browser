@@ -1,39 +1,32 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 
 function GetForm({ setActive, onSubmit }) {
-  const [name, setName] = React.useState('');
-  const [text, setText] = React.useState('');
+  const { register, handleSubmit, reset } = useForm();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    onSubmit([{ name, text }]);
+  function onSubmitForm(data) {
+    onSubmit(data);
     setActive();
-    console.log([{ name, text }]);
-    console.log('name:', name);
-    console.log('text:', text);
-    console.log('send form');
+    reset();
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmitForm)}>
       <div>
         <label htmlFor="name">Name</label>
         <input
           id="name"
           type="text"
-          value={name} //this.props.name
-          onChange={(e) => setName(e.target.value)}
+          {...register('name', { required: true, maxLength: 20 })}
         />
       </div>
       <div>
         <label htmlFor="text">Text</label>
         <textarea
           id="text"
-          value={text} //this.props.text Потом при сабмите по клику передавать функцию с данными?
-          onChange={(e) => setText(e.target.value)}
+          {...register('text', { required: true, maxLength: 20 })}
         />
       </div>
-
       <button type="submit">Submit</button>
     </form>
   );

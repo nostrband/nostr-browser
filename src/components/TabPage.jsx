@@ -12,7 +12,7 @@ export const TabPage = () => {
   const closeModal = () => setIsOpen(false);
 
   const addTab = (data) => {
-    setTabs([...tabs, ...data]);
+    setTabs([...tabs, data]);
   };
 
   const [tabIndex, setTabIndex] = useState(0);

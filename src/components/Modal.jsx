@@ -1,7 +1,6 @@
 import './Modal.scss';
 
 export const Modal = ({ activeModal, setActive, children }) => {
-  console.log(activeModal);
   return (
     <div
       className={activeModal ? 'modal active' : 'modal'}

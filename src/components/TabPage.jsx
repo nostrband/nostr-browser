@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import { Relay } from './Relay';
 
 export const TabPage = ({ data }) => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -17,7 +18,7 @@ export const TabPage = ({ data }) => {
           </TabList>
           {data.length > 0 &&
             data.map((tab, ind) => (
-              <TabPanel key={tab.name + ind}>{tab.text}</TabPanel>
+              <TabPanel key={tab.name + ind}><Relay /></TabPanel>
             ))}
         </Tabs>
       )}

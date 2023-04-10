@@ -1,0 +1,59 @@
+$color:  rgba(19, 35, 47, 0.9);
+$color-label: #ffffff;
+$border-radius: 5px;
+$font-family: 'Titillium Web', sans-serif;
+$font-size: 25px;
+$margin-top: 20px;
+$color-background: #1ab188;
+$width: 100%; 
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+
+.form--container {
+    background-color: $color;
+    border-radius: $border-radius;
+    padding: 40px;
+    max-width: 600px;
+    margin: 40px auto;
+    box-shadow: 0 4px 10px 4px rgb(19 35 47 / 30%);
+}
+form {
+    width: $width;
+}
+input, textarea {
+    font-size: $font-size;
+    display: block;
+    width: $width;
+    padding: 5px 10px;
+    border: 1px solid;
+    background: $color;
+    border-color: #a0b3b0;
+    border-radius: 0;
+    color: $color-label;
+}
+input:focus, textarea:focus {
+    border-color: $color-background;   
+    resize: none;
+    outline: none;
+}
+label {
+    font-size:$font-size;
+    color:$color-label;
+}
+.form--button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 0;
+    padding: 15px 0;
+    font-size: 25px;
+    font-weight: 600;
+    text-transform: uppercase;
+    width: $width;
+    background: $color-background;
+    color:$color-label;
+    margin-top: $margin-top;
+}

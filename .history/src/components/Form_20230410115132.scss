@@ -1,0 +1,17 @@
+$color:  rgba(19, 35, 47, 0.9);
+$border-radius: 5px;
+
+
+.form--container {
+    background-color: $color;
+    border-radius: $border-radius;
+    background: rgba(19, 35, 47, 0.9);
+    padding: 40px;
+    max-width: 600px;
+    margin: 40px auto;
+
+    box-shadow: 0 4px 10px 4px rgb(19 35 47 / 30%);
+}
+form {
+    
+}

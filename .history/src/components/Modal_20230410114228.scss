@@ -27,4 +27,6 @@
 .modal.active {
   opacity: 1;
   pointer-events: all;
+  max-width: 550px;
+  min-height: 660px;
 }

@@ -25,7 +25,7 @@ function GetForm({ setActive, onSubmit }) {
           />
         </div>
         <div>
-          <label htmlFor="text">Text</label>
+          <label>Text</label>
           <textarea
             id="text"
             {...register('text', { required: true, maxLength: 20 })}

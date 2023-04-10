@@ -1,0 +1,17 @@
+#root {
+  text-align: center;
+}
+.main--button {
+  border: none;
+  outline: none;
+  border-radius: none;
+  padding: 15px 0;
+  font-size: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+  width: $width;
+  background: $color-background;
+  color:$color-label;
+  margin-top: $margin-top;
+  cursor: pointer;
+}

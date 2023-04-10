@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.scss';
+import './App.css';
 import { TabPage } from './components/TabPage';
 import { Modal } from './components/Modal';
 import GetForm from './components/Form';

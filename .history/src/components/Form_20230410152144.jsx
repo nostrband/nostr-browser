@@ -20,7 +20,7 @@ function GetForm({ setActive, onSubmit }) {
           <input
             id="name"
             type="text"
-            
+            className='text'
             {...register('name', { required: true, maxLength: 20 })}
           />
         </div>

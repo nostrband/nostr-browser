@@ -20,7 +20,6 @@ function GetForm({ setActive, onSubmit }) {
           <input
             id="name"
             type="text"
-            
             {...register('name', { required: true, maxLength: 20 })}
           />
         </div>
@@ -31,7 +30,7 @@ function GetForm({ setActive, onSubmit }) {
             {...register('text', { required: true, maxLength: 20 })}
           />
         </div>
-        <button className = 'form--button' type="submit">Submit</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );

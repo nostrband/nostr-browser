@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.scss';
+import './App.css';
 import { TabPage } from './components/TabPage';
 import { Modal } from './components/Modal';
 import GetForm from './components/Form';
@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div className="App" style={{ marginTop: 20 }}>
-      <button className = 'main--button' onClick={openModal} style={{ marginBottom: 20 }}>
+      <button onClick={openModal} style={{ marginBottom: 20 }}>
         Press me
       </button>
       <TabPage data={tabs} />

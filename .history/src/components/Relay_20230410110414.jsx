@@ -2,7 +2,6 @@ import {useState, useEffect, useRef} from 'react';
 import {Modal} from './Modal';
 import RelayForm from './RelayForm';
 import {relayInit} from 'nostr-tools'
-import './Relay.scss';
 
 import 'websocket-polyfill'
 
@@ -55,7 +54,7 @@ export const Relay = () => {
                 <div key={message.id}>{JSON.stringify(message)}</div>
             ))}</div>
 
-            <button className = 'relay--button' onClick={openModal} style={{marginBottom: 20}}>
+            <button onClick={openModal} style={{marginBottom: 20}}>
                 {' '}
                 addRelay
             </button>

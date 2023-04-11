@@ -1,6 +1,5 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import './RelayForm.scss';
 
 function RelayForm({ setActive, onSubmit }) {
     const { register, handleSubmit, reset } = useForm();
@@ -21,7 +20,7 @@ function RelayForm({ setActive, onSubmit }) {
                     {...register('url', { required: true, maxLength: 20 })}
                 />
             </div>
-            <button className = 'relayform-button' type="submit">Connect</button>
+            <button type="submit">Connect</button>
         </form>
     );
 }

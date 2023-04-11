@@ -2,7 +2,6 @@ import {useState, useEffect, useRef} from 'react';
 import {Modal} from './Modal';
 import RelayForm from './RelayForm';
 import {relayInit} from 'nostr-tools'
-import './Relay.scss';
 
 import 'websocket-polyfill'
 

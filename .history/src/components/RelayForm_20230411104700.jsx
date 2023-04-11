@@ -1,7 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import './RelayForm.scss';
-
 function RelayForm({ setActive, onSubmit }) {
     const { register, handleSubmit, reset } = useForm();
 

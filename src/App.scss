@@ -1,4 +1,4 @@
-$color:  rgba(19, 35, 47, 0.9);
+/*$color:  rgba(19, 35, 47, 0.9);
 $color-label: #ffffff;
 $border-radius: 5px;
 $font-family: 'Titillium Web', sans-serif;
@@ -9,6 +9,7 @@ $width: 100%;
 #root {
   text-align: center;
 }
+
 .main--button {
   display: flex;
   margin-left: 10px;
@@ -28,4 +29,19 @@ $width: 100%;
 }
 .main--button:hover {
   background: #057658;
+}
+*/
+$font-family: 'Titillium Web', sans-serif;
+.app--image {
+  width: 50px;
+  height: 50px;
+}
+.main--button {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  font-size: 15px;
+  border: none;
+  outline: none;
+  background-color: transparent;
 }

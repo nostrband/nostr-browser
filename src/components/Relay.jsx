@@ -1,16 +1,31 @@
-import {useState, useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {Modal} from './Modal';
 import RelayForm from './RelayForm';
 import {relayInit} from 'nostr-tools'
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 import './Relay.scss';
 
 import 'websocket-polyfill'
 
 export const Relay = () => {
     const [messages, setMessages] = useState([]);
-    const [isOpen, setIsOpen] = useState(false);
-    const openModal = () => setIsOpen(true);
-    const closeModal = () => setIsOpen(false);
+    const [filterValue, setFilterValue] = useState('');
+    const [filterInputValue, setFilterInputValue] = useState('');
+    const [options, setOptions] = useState(['{"kinds": [0], "limit": 1}', '{"kinds": [30023]}', '{"kinds": [9735]}']);
+    const [defaultOption, setDefaultOption] = useState('');
+    let relay;
+    let sub;
+
+    const onPredefinedSelect = (data) => {
+        setFilterValue(data.value);
+        if (data.value && !options.includes(data.value)) {
+            setOptions([...ubiStateRef.current2, data.value].sort((a, b) => a.toUpperCase().localeCompare(b.toUpperCase())));
+            setDefaultOption('')
+        }
+        setDefaultOption(data.value);
+        connectToRelay(data.value);
+    }
 
     const ubiStateRef = useRef();
 
@@ -18,18 +33,25 @@ export const Relay = () => {
         ubiStateRef.current = messages;
     }, [messages]);
 
-    const addMessage = (data) => {
-        console.log(222222)
-        console.log(data)
-        console.log(messages)
+    useEffect(() => {
+        ubiStateRef.current2 = options;
+    }, [options]);
 
+    const addMessage = (data) => {
         setMessages([data, ...ubiStateRef.current]);
-        console.log(messages)
+    };
+
+    const updateFilter = () => {
+        setFilterValue(filterInputValue);
+        setFilterInputValue('');
+        setOptions([...ubiStateRef.current2, filterInputValue]);
+        setDefaultOption(filterInputValue);
     };
 
 
     const connectToRelay = async (data) => {
-        const relay = relayInit('wss://' + data.url)
+
+        relay = relayInit('wss://' + data.url)
 
         relay.on('connect', () => {
             console.log(`connected to ${relay.url}`)
@@ -39,29 +61,39 @@ export const Relay = () => {
         })
 
         await relay.connect();
+    };
 
-        let sub = relay.sub(["REQ", "", {"kinds": [1], "limit": 1}])
+    const subscribeToRelay = async (data) => {
+
+        sub = relay.sub(data)
 
         sub.on('event', event => {
-            console.log(event)
             addMessage(event);
         })
     };
 
+    const unSubscribeToRelay = async (data) => {
+        sub.unsub()
+    };
+
+
     return (
         <div style={{marginTop: 20}}>
 
-            <div id="messages">{messages.map(message => (
+            <h1>{filterValue}</h1>
+            <br/>
+            <label>
+                Filter:
+                <input type="text" value={filterInputValue} onChange={e => setFilterInputValue(e.target.value)}/>
+                <Dropdown options={options} onChange={onPredefinedSelect} value={defaultOption}
+                          placeholder="Select an option"/>
+                <button onClick={updateFilter}> {' '}
+                    update filter
+                </button>
+            </label>
+            {/*{<div id="messages">{messages.map(message => (
                 <div key={message.id}>{JSON.stringify(message)}</div>
-            ))}</div>
-
-            <button className = 'relay--button' onClick={openModal} style={{marginBottom: 20}}>
-                {' '}
-                addRelay
-            </button>
-            <Modal activeModal={isOpen} setActive={closeModal}>
-                <RelayForm setActive={closeModal} onSubmit={connectToRelay}/>
-            </Modal>
+            ))}</div>}*/}
         </div>
     );
 };

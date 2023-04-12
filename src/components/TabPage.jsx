@@ -12,13 +12,11 @@ export const TabPage = ({ data, changeMessages, tabsData }) => {
         <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
           <TabList>
             {data.length > 0 &&
-              data.map((tab, ind) => (
-                <Tab key={tab.name + ind}>{tab.name}</Tab>
-              ))}
+              data.map((tab, ind) => <Tab key={tab.url + ind}>{tab.url}</Tab>)}
           </TabList>
           {data.length > 0 &&
             data.map((tab, ind) => (
-              <TabPanel key={tab.name + ind}>
+              <TabPanel key={tab.url + ind}>
                 <Relay
                   changeMessages={changeMessages}
                   ind={ind}

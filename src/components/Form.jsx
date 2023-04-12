@@ -16,22 +16,16 @@ function GetForm({ setActive, onSubmit }) {
       
       <form onSubmit={handleSubmit(onSubmitForm)}>
         <div>
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">Relay URL</label>
           <input
-            id="name"
+            id="url"
             type="text"
             
-            {...register('name', { required: true, maxLength: 20 })}
+            {...register('url', { required: true, maxLength: 20 })}
           />
         </div>
-        <div>
-          <label htmlFor="text">Text</label>
-          <textarea
-            id="text"
-            {...register('text', { required: true, maxLength: 20 })}
-          />
-        </div>
-        <button className = 'form--button' type="submit">Submit</button>
+
+        <button className = 'form--button' type="submit">Add relay</button>
       </form>
     </div>
   );

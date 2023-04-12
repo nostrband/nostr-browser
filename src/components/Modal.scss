@@ -3,7 +3,8 @@
   width: 100vw;
   position: fixed;
   top: 0;
-  background-color: rgb(234, 227, 227);
+  background: url('backimage.jpg') no-repeat;
+  background-size: cover;
   margin: 0 auto;
   display: flex;
   justify-content: center;

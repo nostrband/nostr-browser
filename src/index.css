@@ -3,3 +3,16 @@
   line-height: 1.5;
   font-weight: 400;
 }
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  background: url('backimage.jpg') no-repeat;
+  background-size: cover;
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+}

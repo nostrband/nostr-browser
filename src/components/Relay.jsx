@@ -43,7 +43,7 @@ export const Relay = () => {
             setOptions([...ubiStateRef.current2, filterInputValue]);
             setDefaultOption(filterInputValue);
             connectToRelay('relay.nostr.band');
-            subscribeToRelay('relay.nostr.band', ["REQ", "", {"kinds": [1], "limit": 1}])
+            subscribeToRelay('relay.nostr.band', [{"kinds": [1]}])
         }
     ;
 

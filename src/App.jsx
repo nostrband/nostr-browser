@@ -17,19 +17,33 @@ function App() {
     setTabs([...tabs, data]);
   };
 
+  const [messages, setMessages] = useState({});
+
+  function changeMessages(ind, data) {
+    messages[ind] = data;
+    setMessages(messages);
+  }
+
   return (
     <div className="App" style={{ marginTop: 20 }}>
-      
-      <button className = 'main--button' onClick={openModal} style={{ marginBottom: 20 }}>
-        <img className = 'app--image' src = {imgGlobal} alt = '' />
+      <button
+        className="main--button"
+        onClick={openModal}
+        style={{ marginBottom: 20 }}
+      >
+        <img className="app--image" src={imgGlobal} alt="" />
         Press me
       </button>
-      <button className = 'main--button' style={{ marginBottom: 20 }}>
-        <img className = 'app--image' src = {imgRelay} alt = '' />
+      <button className="main--button" style={{ marginBottom: 20 }}>
+        <img className="app--image" src={imgRelay} alt="" />
         Relays
       </button>
 
-      <TabPage data={tabs} />
+      <TabPage
+        data={tabs}
+        changeMessages={changeMessages}
+        tabsData={messages}
+      />
       <Modal activeModal={isOpen} setActive={closeModal}>
         <GetForm setActive={closeModal} onSubmit={addTab} />
       </Modal>

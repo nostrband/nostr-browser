@@ -4,7 +4,7 @@ import { TabPage } from './components/TabPage';
 import { Modal } from './components/Modal';
 import GetForm from './components/Form';
 import imgGlobal from './global.png';
-import imgRelay from './chat.png';
+import imgRelay from './relay.png';
 
 function App() {
   const [tabs, setTabs] = useState([]);

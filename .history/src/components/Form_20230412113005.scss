@@ -1,12 +1,12 @@
 $color:  rgba(19, 35, 47, 0.9);
 $color-label: #ffffff;
-$border-radius: 15px;
+$border-radius: 5px;
 $font-family: 'Titillium Web', sans-serif;
 $font-size: 25px;
 $margin-top: 20px;
 $color-background: rgb(0, 0, 0);
 $width: 100%; 
-$border: 3px solid #352537;
+$border: 5px solid #2a1f2c;
 
 *, *:before, *:after {
     box-sizing: border-box;
@@ -32,14 +32,13 @@ input {
     display: block;
     width: $width;
     padding: 5px 10px;
-    background: $color-background;
+    background: $color;
     color: $color-label;
 }
 input:focus {
-    border-color: #352537;
+    border-color: $color-background;   
     resize: none;
     outline: none;
-    background: $color;
 }
 label {
     font-size:$font-size;
@@ -62,5 +61,5 @@ label {
     cursor: pointer;
 }
 .form--button:hover {
-    background: #2a1f2c;
+    background: #2a1f2c;;
 }

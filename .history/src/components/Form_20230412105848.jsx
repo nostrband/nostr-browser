@@ -25,7 +25,7 @@ function GetForm({ setActive, onSubmit }) {
           />
         </div>
 
-        <button className = 'form--button' type="submit">Add relay</button>
+        <button className = 'form--button' type="submit">Submit</button>
       </form>
     </div>
   );

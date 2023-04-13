@@ -12,8 +12,9 @@ export const Relay = ({ changeMessages, ind, tabsData }) => {
   const [filterInputValue, setFilterInputValue] = useState('');
   const [options, setOptions] = useState([
     '{"kinds": [0], "limit": 1}',
-    '{"kinds": [30023]}',
-    '{"kinds": [9735]}',
+    '{"kinds": [30023], "limit": 1}',
+    '{"kinds": [9735], "limit": 1}',
+    '{"kinds": [1], "limit": 1}',
   ]);
 
   const [defaultOption, setDefaultOption] = useState('');
@@ -52,7 +53,7 @@ export const Relay = ({ changeMessages, ind, tabsData }) => {
     setOptions([...ubiStateRef.current2, filterInputValue]);
     setDefaultOption(filterInputValue);
     connectToRelay('relay.nostr.band');
-    subscribeToRelay('relay.nostr.band', [{ kinds: [1] }]);
+    subscribeToRelay('relay.nostr.band', [ JSON.parse(filterInputValue)]);
   };
   const connectToRelay = (data) => {
     Nostr.addRelay(data);

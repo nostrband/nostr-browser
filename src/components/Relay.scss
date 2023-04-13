@@ -1,10 +1,39 @@
-$color:  rgba(19, 35, 47, 0.9);
-$color-label: #ffffff;
-$font-family: 'Titillium Web', sans-serif;
-$font-size: 25px;
-$margin-top: 20px;
-$color-background: #1ab188;
-.relay--button {
+@import '../variables.scss';
+.relay--buttonFilter {
+  border-color: none;
+  border: $border;
+  outline: none;
+  border-radius: $border-radius;
+
+  padding: 15px 0;
+  font-size: $basicFontSize;
+  font-weight: 600;
+  text-transform: uppercase;
+  width: $width;
+  background: $backgroundFields;
+  color: $color-label;
+  margin-top: $margin-top;
+  cursor: pointer;
+}
+.relay--buttonFilter:hover {
+  background: #2a1f2c;
+}
+.relay--container__input {
+  border-radius: $border-radius;
+  font-size: $basicFontSize;
+  border: $border;
+  display: block;
+  width: $width;
+  padding: 5px 10px;
+  background: $backgroundFields;
+  color: $color-label;
+}
+
+//$color:  rgba(19, 35, 47, 0.9);
+
+//$color-background: #1ab188;
+
+/*.relay--button {
     border: none;
     outline: none;
     border-radius: 50px;
@@ -23,4 +52,4 @@ $color-background: #1ab188;
   }
   .relay--button:hover {
     background: #057658;
-  }
+  }*/

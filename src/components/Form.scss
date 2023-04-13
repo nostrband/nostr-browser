@@ -1,12 +1,4 @@
-$color: rgba(19, 35, 47, 0.9); //???
-$color-label: #ffffff;
-$border-radius: 15px;
-$font-family: 'Titillium Web', sans-serif; // ???
-$basicFontSize: 25px; //naming
-$margin-top: 20px; // superfluous
-$color-background: rgb(0, 0, 0); //naming
-$width: 100%; //superfluous
-$border: 3px solid #352537; //which component?
+@import '../variables.scss';
 
 *,
 *:before,
@@ -15,7 +7,7 @@ $border: 3px solid #352537; //which component?
 }
 
 .form--container {
-  background-color: $color-background;
+  background-color: $backgroundFields;
   border-radius: $border-radius;
   padding: 40px;
   max-width: 600px;
@@ -34,7 +26,7 @@ input {
   display: block;
   width: $width;
   padding: 5px 10px;
-  background: $color-background;
+  background: $backgroundFields;
   color: $color-label;
 }
 input:focus {
@@ -58,7 +50,7 @@ label {
   font-weight: 600;
   text-transform: uppercase;
   width: $width;
-  background: $color-background;
+  background: $backgroundFields;
   color: $color-label;
   margin-top: $margin-top;
   cursor: pointer;

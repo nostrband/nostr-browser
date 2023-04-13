@@ -31,10 +31,17 @@ $width: 100%;
   background: #057658;
 }
 */
-$font-family: 'Titillium Web', sans-serif;
 .app--image {
   width: 50px;
   height: 50px;
+}
+.App {
+  display: flex;
+  flex-direction: row;
+}
+.App--buttons {
+  display: flex;
+  flex-direction: column;
 }
 .main--button {
   display: flex;

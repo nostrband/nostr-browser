@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import './Form.scss';
+import '../variables.scss';
 
 function GetForm({ setActive, onSubmit }) {
   const { register, handleSubmit, reset } = useForm();

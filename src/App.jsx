@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import './App.scss';
+import './variables.scss';
 import { TabPage } from './components/TabPage';
 import { Modal } from './components/Modal';
 import GetForm from './components/Form';
-import imgGlobal from './global.png';
-import imgRelay from './chat.png';
+import imgGlobal from './assets/global.png';
+import imgRelay from './assets/chat.png';
 
 function App() {
   const [tabs, setTabs] = useState([]);
@@ -26,18 +27,20 @@ function App() {
 
   return (
     <div className="App" style={{ marginTop: 20 }}>
-      <button
-        className="main--button"
-        onClick={openModal}
-        style={{ marginBottom: 20 }}
-      >
-        <img className="app--image" src={imgGlobal} alt="" />
-        Press me
-      </button>
-      <button className="main--button" style={{ marginBottom: 20 }}>
-        <img className="app--image" src={imgRelay} alt="" />
-        Relays
-      </button>
+      <div className='App--buttons'>
+        <button
+          className="main--button"
+          onClick={openModal}
+          style={{ marginBottom: 20 }}
+        >
+          <img className="app--image" src={imgGlobal} alt="" />
+          Press me
+        </button>
+        <button className="main--button" style={{ marginBottom: 20 }}>
+          <img className="app--image" src={imgRelay} alt="" />
+          Relays
+        </button>
+      </div>
 
       <TabPage
         data={tabs}

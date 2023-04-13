@@ -64,23 +64,23 @@ export const Relay = ({ changeMessages, ind, tabsData }) => {
   };
 
   return (
-    <div style={{ marginTop: 20 }}>
+    <div  className = 'relay--container' style={{ marginTop: 20 }}>
       <h1>{filterValue}</h1>
       <br />
       <label>
         Filter:
-        <input
+        <input className='relay--container__input'
           type="text"
           value={filterInputValue}
           onChange={(e) => setFilterInputValue(e.target.value)}
         />
         <Dropdown
-          options={options}
+          options = {options}
           onChange={onPredefinedSelect}
           value={defaultOption}
-          placeholder="Select an option"
+          placeholder ="Select an option"
         />
-        <button onClick={updateFilter}> update filter</button>
+        <button className = 'relay--buttonFilter' onClick={updateFilter}>update filter</button>
       </label>
       {
         <div id="messages">

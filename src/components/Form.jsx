@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import './Form.scss';
+import '../variables.scss';
 
 function GetForm({ setActive, onSubmit }) {
   const { register, handleSubmit, reset } = useForm();
@@ -16,8 +17,8 @@ function GetForm({ setActive, onSubmit }) {
       
       <form onSubmit={handleSubmit(onSubmitForm)}>
         <div>
-          <label htmlFor="name">Relay URL</label>
-          <input
+          <label className = 'form--label' htmlFor="name">Relay URL</label>
+          <input className = 'form--input'
             id="url"
             type="text"
             

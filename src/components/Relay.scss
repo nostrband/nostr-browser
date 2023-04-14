@@ -1,26 +1,158 @@
-$color:  rgba(19, 35, 47, 0.9);
-$color-label: #ffffff;
-$font-family: 'Titillium Web', sans-serif;
-$font-size: 25px;
-$margin-top: 20px;
-$color-background: #1ab188;
-.relay--button {
-    border: none;
-    outline: none;
-    border-radius: 50px;
-    padding: 15px 0;
-    font-size: 25px;
-    font-weight: 600;
-    text-transform: uppercase;
-    width: 200px;
-    background: $color-background;
-    color:$color-label;
-    margin-top: $margin-top;
-    cursor: pointer;
-    display: flex;
-    margin-left: 10px;
-    justify-content: center;
+@import '../variables.scss';
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+.relay--buttonFilter {
+  border-color: none;
+  border: $borderFields;
+  outline: none;
+  border-radius: $border-radius;
+
+  padding: 15px 0;
+  font-size: $basicFontSize;
+  font-weight: 600;
+  text-transform: uppercase;
+  width: $width;
+  background: $backgroundFields;
+  color: $colorText;
+  margin-top: $margin-top;
+  cursor: pointer;
+}
+.relay--buttonFilter:hover {
+  background: #2a1f2c;
+}
+.relay--container__input {
+  border-radius: $border-radius;
+  font-size: $basicFontSize;
+  border: $borderFields;
+  display: block;
+  width: $width;
+  padding: 5px 10px;
+  background: $backgroundFields;
+  color: $colorText;
+  //border-color: #352537;
+}
+.relay--container__label {
+  font-size: $basicFontSize;
+}
+.relay--container__input:focus {
+  background: $colorInputFocus;
+  border-color: #352537;
+  outline:none;
+}
+
+  .Dropdown-root {
+    position: relative;
   }
-  .relay--button:hover {
-    background: #057658;
+  
+  .Dropdown-control {
+    position: relative;
+    overflow: hidden;
+    border-radius: $border-radius;
+    font-size: $basicFontSize;
+    border: $borderFields;
+    box-sizing: border-box;
+    color: $colorText;
+    cursor: default;
+    outline: none;
+    padding: 5px 10px;
+    transition: all 200ms ease;
+    background: $backgroundFields;
+    margin-top: 10px;
+
+  }
+  
+  .Dropdown-control:hover {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  }
+  
+  .Dropdown-arrow {
+    border-color: #999 transparent transparent;
+    border-style: solid;
+    border-width: 5px 5px 0;
+    content: ' ';
+    display: block;
+    height: 0;
+    margin-top: -ceil(2.5);
+    position: absolute;
+    right: 10px;
+    top: 14px;
+    width: 0
+  }
+  
+  .is-open .Dropdown-arrow {
+    border-color: transparent transparent #999;
+    border-width: 0 5px 5px;
+  }
+  
+  .Dropdown-menu {
+    background-color: $backgroundFields;
+    border-radius: $border-radius;
+    
+    border: $borderFields;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+    box-sizing: border-box;
+    margin-top: -1px;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    z-index: 1000;
+    -webkit-overflow-scrolling: touch;
+  }
+  .Dropdown-menu::-webkit-scrollbar {
+    border-radius: 10px;
+    background-color: #352537; 
+    width: 10px;
+  }
+  .Dropdown-menu::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #352537;
+  }
+  
+  .Dropdown-menu::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: rgb(77, 48, 68);
+  }
+  
+  .Dropdown-menu .Dropdown-group > .Dropdown-title{
+    padding: 8px 10px;
+    color: rgba(51, 51, 51, 1);
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+  
+  .Dropdown-option {
+    box-sizing: border-box;
+    color: $colorText;
+    cursor: pointer;
+    display: block;
+    padding: 8px 10px;
+  }
+  
+  .Dropdown-option:last-child {
+    border-bottom-right-radius: 2px;
+     border-bottom-left-radius: 2px;
+  }
+  
+  .Dropdown-option:hover {
+    background-color: #f2f9fc;
+    color: #333;
+  }
+  
+  .Dropdown-option.is-selected {
+    background-color: #f2f9fc;
+    color: #333;
+  }
+  
+  .Dropdown-noresults {
+    box-sizing: border-box;
+    color: #ccc;
+    cursor: default;
+    display: block;
+    padding: 8px 10px;
   }

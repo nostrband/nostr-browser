@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
+import './Tabs.scss';
 import { Relay } from './Relay';
 
-export const TabPage = ({ data }) => {
+export const TabPage = ({ data, changeMessages, tabsData }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   return (
@@ -12,13 +12,17 @@ export const TabPage = ({ data }) => {
         <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
           <TabList>
             {data.length > 0 &&
-              data.map((tab, ind) => (
-                <Tab key={tab.name + ind}>{tab.name}</Tab>
-              ))}
+              data.map((tab, ind) => <Tab key={tab.url + ind}>{tab.url}</Tab>)}
           </TabList>
           {data.length > 0 &&
             data.map((tab, ind) => (
-              <TabPanel key={tab.name + ind}><Relay /></TabPanel>
+              <TabPanel key={tab.url + ind}>
+                <Relay
+                  changeMessages={changeMessages}
+                  ind={ind}
+                  tabsData={tabsData}
+                />
+              </TabPanel>
             ))}
         </Tabs>
       )}

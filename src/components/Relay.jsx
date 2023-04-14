@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
+//import 'react-dropdown/style.css';
 import './Relay.scss';
 import Nostr from '../Nostr';
+import '../variables.scss';
 
 import 'websocket-polyfill';
 
@@ -68,9 +69,9 @@ export const Relay = ({ changeMessages, ind, tabsData }) => {
     <div  className = 'relay--container' style={{ marginTop: 20 }}>
       <h1>{filterValue}</h1>
       <br />
-      <label>
+      <label className = 'relay--container__label'>
         Filter:
-        <input className='relay--container__input'
+        <input className = 'relay--container__input'
           type="text"
           value={filterInputValue}
           onChange={(e) => setFilterInputValue(e.target.value)}

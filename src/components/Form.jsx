@@ -17,8 +17,8 @@ function GetForm({ setActive, onSubmit }) {
       
       <form onSubmit={handleSubmit(onSubmitForm)}>
         <div>
-          <label htmlFor="name">Relay URL</label>
-          <input
+          <label className = 'form--label' htmlFor="name">Relay URL</label>
+          <input className = 'form--input'
             id="url"
             type="text"
             

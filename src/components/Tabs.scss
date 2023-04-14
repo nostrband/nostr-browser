@@ -1,3 +1,4 @@
+@import '../variables.scss';
 .react-tabs {
   -webkit-tap-highlight-color: transparent;
 }
@@ -14,7 +15,7 @@
 .react-tabs__tab {
   display: flex;
   flex-direction: column;
-  border: 2px solid #352537;
+  border: $borderFields;
   border-radius: 15px;
   bottom: -1px;
   position: relative;
@@ -39,7 +40,7 @@
   color: white;
   border-radius: 15px;
     font-size: 12px;
-    border: 3px solid #352537;
+    border: $borderFields;
     display: block;
     width: 100%;
     padding: 5px 10px;

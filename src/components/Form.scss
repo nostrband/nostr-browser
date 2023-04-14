@@ -12,36 +12,37 @@
   padding: 40px;
   max-width: 600px;
   margin: 40px auto;
-  border: $border;
+  border: $borderFields;
   font-size: $basicFontSize;
   //box-shadow: 0 4px 10px 4px rgba(20, 20, 20, 0.3);
 }
 form {
   width: $width;
 }
-input {
+.form--input {
   border-radius: $border-radius;
   font-size: $basicFontSize;
-  border: $border;
+  border: $borderFields;
   display: block;
   width: $width;
   padding: 5px 10px;
   background: $backgroundFields;
-  color: $color-label;
+  color: $colorText;
+  border-color: #352537;
 }
-input:focus {
+.form--input:focus {
   border-color: #352537;
   resize: none;
   outline: none;
-  background: $color;
+  background: $colorInputFocus;
 }
-label {
+.form--label {
   // font-size: $font-size;
-  color: $color-label;
+  color: $colorText;
 }
 .form--button {
   border-color: none;
-  border: $border;
+  border: $borderFields;
   outline: none;
   border-radius: $border-radius;
 
@@ -51,7 +52,7 @@ label {
   text-transform: uppercase;
   width: $width;
   background: $backgroundFields;
-  color: $color-label;
+  color: $colorText;
   margin-top: $margin-top;
   cursor: pointer;
 }

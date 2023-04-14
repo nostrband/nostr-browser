@@ -67,7 +67,10 @@ const Nostr = {
     let relay = this.relays.get(url);
     if (!relay) return;
     try {
-      relay.connect();
+
+      if (relay.status === 3) {
+        relay.connect();
+      }
     } catch (e) {
       console.log(e);
     }

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './App.scss';
 import './variables.scss';
-import { TabPage } from './components/TabPage';
+// import { TabPage } from './components/TabPage';
 import { Modal } from './components/Modal';
 import GetForm from './components/Form';
 import imgGlobal from './assets/global.png';
 import imgRelay from './assets/chat.png';
+import { Tabs } from './components/Tabs/Tabs';
 
 function App() {
   const [tabs, setTabs] = useState([]);
@@ -17,13 +18,6 @@ function App() {
   const addTab = (data) => {
     setTabs([...tabs, data]);
   };
-
-  const [messages, setMessages] = useState({});
-
-  function changeMessages(ind, data) {
-    messages[ind] = data;
-    setMessages(messages);
-  }
 
   return (
     <div className="App" style={{ marginTop: 20 }}>
@@ -42,11 +36,8 @@ function App() {
         </button>
       </div>
 
-      <TabPage
-        data={tabs}
-        changeMessages={changeMessages}
-        tabsData={messages}
-      />
+      {/* <TabPage data={tabs} /> */}
+      <Tabs data={tabs} />
       <Modal activeModal={isOpen} setActive={closeModal}>
         <GetForm setActive={closeModal} onSubmit={addTab} />
       </Modal>

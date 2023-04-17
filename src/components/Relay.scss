@@ -5,6 +5,9 @@
   box-sizing: border-box;
 }
 
+.relay--container {
+  max-width: 350px;
+}
 .relay--buttonFilter {
   border-color: none;
   border: $borderFields;

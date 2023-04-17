@@ -113,10 +113,9 @@ export const Relay = ({ url, setFilter, ind, changeFilter }) => {
   };
 
   return (
-    <div className="relay--container" style={{ marginTop: 20 }}>
+    <div className="relay--container">
       <br />
       <label className="relay--container__label">
-        Filter:
         <input
           className="relay--container__input"
           type="text"

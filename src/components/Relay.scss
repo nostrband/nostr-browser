@@ -6,7 +6,7 @@
 }
 
 .relay--container {
-  max-width: 350px;
+  width: 350px;  
 }
 .relay--buttonFilter {
   border-color: none;
@@ -65,7 +65,6 @@
     transition: all 200ms ease;
     background: $backgroundFields;
     margin-top: 10px;
-
   }
   
   .Dropdown-control:hover {

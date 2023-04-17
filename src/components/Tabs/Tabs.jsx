@@ -11,7 +11,7 @@ export const Tabs = ({ data, setFilter, filter, changeFilter }) => {
   return (
     <>
       {data.length > 0 && (
-        <div>
+        <div className = 'tab--mainContainer'>
           <div className="tab">
             {data.map((item, index) => (
               <button

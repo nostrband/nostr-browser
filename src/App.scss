@@ -53,3 +53,7 @@ $width: 100%;
   background-color: transparent;
   color: white;
 }
+.app--tabs {
+  display: flex;
+  flex-direction: row;
+}

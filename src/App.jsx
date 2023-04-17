@@ -3,8 +3,7 @@ import './App.scss';
 import './variables.scss';
 import { Modal } from './components/Modal';
 import GetForm from './components/Form';
-import imgGlobal from './assets/global.png';
-import imgRelay from './assets/chat.png';
+import imgGlobal from './assets/chat.png';
 import { Tabs } from './components/Tabs/Tabs';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -52,10 +51,6 @@ function App() {
         >
           <img className="app--image" src={imgGlobal} alt="" />
           Press me
-        </button>
-        <button className = 'main--button'>
-          <img className="app--image" src={imgRelay} alt="" />
-          Relays
         </button>
       </div>
       <div className='app--tabs'>

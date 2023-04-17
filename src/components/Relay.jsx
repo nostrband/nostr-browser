@@ -115,6 +115,14 @@ export const Relay = ({ url, setFilter, ind, changeFilter }) => {
   return (
     <div className="relay--container">
       <br />
+      {
+        <div id="messages" className='relay--container__messages'>
+          {messages.map((message) => (
+            <div className='messages' key={message.id}>{JSON.stringify(message)}</div>
+          ))}
+        </div>
+      }
+      <div className = 'relay--container__filter'>
       <label className="relay--container__label">
         <input
           className="relay--container__input"
@@ -133,13 +141,8 @@ export const Relay = ({ url, setFilter, ind, changeFilter }) => {
           update filter
         </button>
       </label>
-      {
-        <div id="messages">
-          {messages.map((message) => (
-            <div key={message.id}>{JSON.stringify(message)}</div>
-          ))}
-        </div>
-      }
+      </div>
+     
     </div>
   );
 };

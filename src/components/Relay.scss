@@ -4,9 +4,27 @@
 *:after {
   box-sizing: border-box;
 }
-
+.relay--container__filter {
+  width: 300px;
+  //position: absolute;
+  //left: 500px;
+}
+.relay--container__messages {
+  width: 40%;
+ 
+}
+.messages {
+  border: $borderFields;
+  outline: none;
+  border-radius: $border-radius;
+  background: $backgroundFields;
+  color: $colorText;
+  margin-bottom: 10px;
+}
 .relay--container {
-  width: 350px;  
+  width: 70%;  
+  display: flex;
+  flex-direction: row;
 }
 .relay--buttonFilter {
   border-color: none;
@@ -82,7 +100,7 @@
     position: absolute;
     right: 10px;
     top: 14px;
-    width: 0
+    width: 0;
   }
   
   .is-open .Dropdown-arrow {

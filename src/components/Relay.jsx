@@ -9,7 +9,7 @@ import 'websocket-polyfill';
 
 import { toast } from 'react-toastify';
 
-export const Relay = ({ url, setFilter, ind, changeFilter }) => {
+export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
   const [messages, setMessages] = useState([]);
   const [filterValue, setFilterValue] = useState('');
   const [filterInputValue, setFilterInputValue] = useState('');
@@ -60,7 +60,7 @@ export const Relay = ({ url, setFilter, ind, changeFilter }) => {
 
   useEffect(() => {
     if (ind === 0) {
-      connectToRelay(url);
+      connectToRelay(url, () => {});
       subscribeToRelay(url, [{ kinds: [1], limit: 1 }]);
     }
   });
@@ -94,17 +94,34 @@ export const Relay = ({ url, setFilter, ind, changeFilter }) => {
     }
     setDefaultOption('');
 
-    if (newFilter.startsWith('{') && newFilter.endsWith('}')) {
-      subscribeToRelay(url, [JSON.parse(newFilter)]);
-      setFilter(newFilter, ind);
+    if (filter === undefined) {
+      if (newFilter.startsWith('{') && newFilter.endsWith('}')) {
+        subscribeToRelay(url, [JSON.parse(newFilter)]);
+        setFilter(newFilter, ind);
+      } else {
+        notify('Wrong data!');
+        changeFilter(null, ind);
+      }
     } else {
-      notify('Wrong data!');
-      changeFilter(null, ind);
+      if (newFilter.startsWith('{') && newFilter.endsWith('}')) {
+        subscribeToRelay(url, [JSON.parse(newFilter)]);
+        changeFilter(JSON.parse(newFilter), ind);
+      } else {
+        notify('Wrong data!');
+        changeFilter(null, ind);
+      }
     }
+    // if (newFilter.startsWith('{') && newFilter.endsWith('}')) {
+    //   subscribeToRelay(url, [JSON.parse(newFilter)]);
+    //   changeFilter(JSON.parse(newFilter), ind);
+    // } else {
+    //   notify('Wrong data!');
+    //   changeFilter(null, ind);
+    // }
   };
 
-  const connectToRelay = (data) => {
-    Nostr.addRelay(data);
+  const connectToRelay = (data, callback) => {
+    Nostr.addRelay(data, callback);
     Nostr.connectRelay(data);
   };
 
@@ -136,8 +153,8 @@ export const Relay = ({ url, setFilter, ind, changeFilter }) => {
       </label>
       {
         <div id="messages">
-          {messages.map((message) => (
-            <div key={message.id}>{JSON.stringify(message)}</div>
+          {messages.map((message, ind) => (
+            <div key={message.id + ind}>{JSON.stringify(message)}</div>
           ))}
         </div>
       }

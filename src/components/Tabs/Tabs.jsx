@@ -35,6 +35,7 @@ export const Tabs = ({ data, setFilter, filter, changeFilter }) => {
                 setFilter={setFilter}
                 ind={index}
                 changeFilter={changeFilter}
+                filter={filter[index]}
               />
             </div>
           ))}

@@ -17,14 +17,20 @@ function App() {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
-  const connectToRelay = (data) => {
-    Nostr.addRelay(data);
+  const isConnectedSuccess = (data) => {
+    setTabs([...tabs, data]);
+  };
+
+  const connectToRelay = (data, callback) => {
+    Nostr.addRelay(data, callback);
     Nostr.connectRelay(data);
   };
 
   const addTab = (data) => {
-    connectToRelay(data.url);
-    setTabs([...tabs, data]);
+    if (Nostr.relays.has(data.url)) {
+      isConnectedSuccess(data);
+    }
+    connectToRelay(data.url, (data) => isConnectedSuccess(data));
   };
 
   const addFilter = (value, ind) => {

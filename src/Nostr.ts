@@ -11,7 +11,6 @@ let defaultRelays = new Map<string, Relay>(
 const Nostr = {
   relays: defaultRelays,
   subscriptions: new Map<string, Map<string, Sub>>(),
-  connected: false,
 
   notify(message: string) {
     toast(message, {
@@ -26,12 +25,13 @@ const Nostr = {
     });
   },
 
-  addRelay(url: string) {
+  addRelay(url: string, callback) {
     let relay = this.relays.get(url);
 
     if (relay) {
       return relay;
     }
+
     relay = relayInit(URL_PREFIX + url);
 
     relay.on('notice', (notice) => {
@@ -42,12 +42,14 @@ const Nostr = {
     });
 
     relay.on('connect', () => {
+      callback({ url: url });
       console.log(`connected to ${relay.url}`);
     });
 
     relay.on('error', () => {
       this.notify(`Can't connected to relay with ${url}!`);
       console.log(`failed to connect to ${relay.url}`);
+      this.relays.delete(url);
     });
 
     this.relays.set(url, relay);

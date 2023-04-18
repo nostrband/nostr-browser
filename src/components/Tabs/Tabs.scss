@@ -1,33 +1,52 @@
 @import '../../variables.scss';
 .tab {
   overflow: hidden;
-  
   position: relative;
+  display: flex;
+  width: 80%;
 }
+
+/*.tab {
+  overflow: hidden;
+  position: relative;
+  border-radius: $border-radius;
+  border: $borderFields;
+  background-color: $backgroundFields;
+  display: flex;
+
+  //float: left;
+  //display: flex;
+}
+
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}*/
 .tablinks {
-  $border-radius: $border-radius;
   border: $borderFields;
   outline: none;
   cursor: pointer;
   padding: 14px 16px;
   transition: 0.3s;
   font-size: 17px;
-  width: 300px;
-  height: 50px;
-  $border-radius: $border-radius;
+  min-height: 60px;
+  max-height: 70px;
   background-color: $backgroundFields;
   color: $colorText;
   border-radius: $border-radius;
   margin-right: 10px;
-}
-.tab {
-  
-  float: left;
-  
+  text-align: justify;
+  width: 400px;
 }
 
 button .tablinks.active{
-  $border-radius: $border-radius;
+  border-radius: $border-radius;
 }
 
 /*.tab button:hover {
@@ -35,17 +54,25 @@ button .tablinks.active{
 }*/
 
 .tab button.active {
-  $border-radius: $border-radius;
+  background-color: $colorText;
+  color: black;
+  width: 100%;
 }
 
 .tabcontent {
   position: absolute;
-  top: 285px;
-  left: 0px;
+  top: 100px;
+  left: 55px;
+  //top: 285px;
+  //left: 0px;
   visibility: hidden;
   padding: 6px 12px;
   border-top: none;
   color: $colorText;
+}
+.tab--mainContainer {
+  display: flex;
+  flex-direction: row;
 }
 
 .tabcontent.active {
@@ -119,12 +146,12 @@ button .tablinks.active{
   background: #fff;
 }
 */
-.react-tabs__tab-panel {
+//.react-tabs__tab-panel {
   /* display: none; */
-  visibility: hidden;
-}
+ // visibility: hidden;
+//}
 
-.react-tabs__tab-panel--selected {
+//.react-tabs__tab-panel--selected {
   /* display: block; */
-  visibility: visible;
-}
+ // visibility: visible;
+//}

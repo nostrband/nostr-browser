@@ -38,6 +38,7 @@ $width: 100%;
 .App {
   display: flex;
   flex-direction: row;
+  width: 90%;
 }
 .App--buttons {
   display: flex;
@@ -52,4 +53,8 @@ $width: 100%;
   outline: none;
   background-color: transparent;
   color: white;
+}
+.app--tabs {
+  display: flex;
+  flex-direction: row;
 }

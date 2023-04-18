@@ -130,34 +130,37 @@ export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
   };
 
   return (
-    <div className="relay--container" style={{ marginTop: 20 }}>
+    <div className="relay--container">
       <br />
-      <label className="relay--container__label">
-        Filter:
-        <input
-          className="relay--container__input"
-          type="text"
-          value={filterInputValue}
-          onChange={(e) => updateInputFilter(e.target.value)}
-        />
-        <Dropdown
-          options={options}
-          onChange={onPredefinedSelect}
-          value={defaultOption}
-          placeholder="Select an option"
-        />
-        <button className="relay--buttonFilter" onClick={updateFilter}>
-          {' '}
-          update filter
-        </button>
-      </label>
       {
-        <div id="messages">
-          {messages.map((message, ind) => (
-            <div key={message.id + ind}>{JSON.stringify(message)}</div>
+        <div id="messages" className="relay--container__messages">
+          {messages.map((message) => (
+            <div className="messages" key={message.id + ind}>
+              {JSON.stringify(message)}
+            </div>
           ))}
         </div>
       }
+      <div className="relay--container__filter">
+        <label className="relay--container__label">
+          <input
+            className="relay--container__input"
+            type="text"
+            value={filterInputValue}
+            onChange={(e) => updateInputFilter(e.target.value)}
+          />
+          <Dropdown
+            options={options}
+            onChange={onPredefinedSelect}
+            value={defaultOption}
+            placeholder="Select an option"
+          />
+          <button className="relay--buttonFilter" onClick={updateFilter}>
+            {' '}
+            update filter
+          </button>
+        </label>
+      </div>
     </div>
   );
 };

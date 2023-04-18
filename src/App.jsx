@@ -3,7 +3,7 @@ import './App.scss';
 import './variables.scss';
 import { Modal } from './components/Modal';
 import GetForm from './components/Form';
-import imgGlobal from './assets/global.png';
+import imgGlobal from './assets/chat.png';
 import { Tabs } from './components/Tabs/Tabs';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -59,6 +59,7 @@ function App() {
           Press me
         </button>
       </div>
+      <div className='app--tabs'>
       <Tabs
         data={tabs}
         setFilter={addFilter}
@@ -69,6 +70,7 @@ function App() {
         <GetForm setActive={closeModal} onSubmit={addTab} />
       </Modal>
       <ToastContainer />
+      </div>
     </div>
   );
 }

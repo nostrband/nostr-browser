@@ -1,12 +1,16 @@
-import { useState } from 'react';
-
 import './Tabs.scss';
+
 import { Relay } from '../Relay';
 
-export const Tabs = ({ data, setFilter, filter, changeFilter }) => {
-  const [active, setActive] = useState(0);
-
-  const openTab = (event) => setActive(+event.target.dataset.index);
+export const Tabs = ({
+  data,
+  setFilter,
+  filter,
+  changeFilter,
+  active,
+  changeActiveTab,
+}) => {
+  const openTab = (event) => changeActiveTab(+event.target.dataset.index);
 
   return (
     <>
@@ -41,6 +45,7 @@ export const Tabs = ({ data, setFilter, filter, changeFilter }) => {
                 ind={index}
                 changeFilter={changeFilter}
                 filter={filter[index]}
+                changeActiveTab={changeActiveTab}
               />
             </div>
           ))}

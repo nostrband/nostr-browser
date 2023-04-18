@@ -13,12 +13,21 @@ function App() {
   const [tabs, setTabs] = useState([{ url: 'relay.nostr.band' }]);
   const [filter, setFilter] = useState([{ kinds: [1], limit: 1 }]);
   const [isOpen, setIsOpen] = useState(false);
+  const [active, setActive] = useState(0);
+
+  const changeActiveTab = (ind) => {
+    setActive(ind);
+  };
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
   const isConnectedSuccess = (data) => {
     setTabs([...tabs, data]);
+    const index = active + 1;
+    filter.push(null);
+    setFilter(filter);
+    changeActiveTab(index);
   };
 
   const connectToRelay = (data, callback) => {
@@ -33,17 +42,17 @@ function App() {
     connectToRelay(data.url, (data) => isConnectedSuccess(data));
   };
 
-  const addFilter = (value, ind) => {
-    if (filter[ind]) {
-      filter.splice(ind, 1, JSON.parse(value));
+  const addFilter = (value) => {
+    if (filter[active]) {
+      filter.splice(active, 1, JSON.parse(value));
     } else {
       filter.push(JSON.parse(value));
     }
     setFilter([...filter]);
   };
 
-  const changeFilter = (value, ind) => {
-    filter.splice(ind, 1, value);
+  const changeFilter = (value) => {
+    filter.splice(active, 1, value);
     setFilter([...filter]);
   };
 
@@ -51,7 +60,7 @@ function App() {
     <div className="App">
       <button className="main--button" onClick={openModal}>
         <img className="app--image" src={imgGlobal} alt="" />
-        Press me
+        Add relay
       </button>
       <div className="app--tabs">
         <Tabs
@@ -59,6 +68,8 @@ function App() {
           setFilter={addFilter}
           filter={filter}
           changeFilter={changeFilter}
+          active={active}
+          changeActiveTab={changeActiveTab}
         />
         <Modal activeModal={isOpen} setActive={closeModal}>
           <GetForm setActive={closeModal} onSubmit={addTab} />

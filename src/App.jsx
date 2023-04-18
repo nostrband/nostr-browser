@@ -48,28 +48,22 @@ function App() {
   };
 
   return (
-    <div className="App" style={{ marginTop: 20 }}>
-      <div className="App--buttons">
-        <button
-          className="main--button"
-          onClick={openModal}
-          style={{ marginBottom: 20 }}
-        >
-          <img className="app--image" src={imgGlobal} alt="" />
-          Press me
-        </button>
-      </div>
-      <div className='app--tabs'>
-      <Tabs
-        data={tabs}
-        setFilter={addFilter}
-        filter={filter}
-        changeFilter={changeFilter}
-      />
-      <Modal activeModal={isOpen} setActive={closeModal}>
-        <GetForm setActive={closeModal} onSubmit={addTab} />
-      </Modal>
-      <ToastContainer />
+    <div className="App">
+      <button className="main--button" onClick={openModal}>
+        <img className="app--image" src={imgGlobal} alt="" />
+        Press me
+      </button>
+      <div className="app--tabs">
+        <Tabs
+          data={tabs}
+          setFilter={addFilter}
+          filter={filter}
+          changeFilter={changeFilter}
+        />
+        <Modal activeModal={isOpen} setActive={closeModal}>
+          <GetForm setActive={closeModal} onSubmit={addTab} />
+        </Modal>
+        <ToastContainer />
       </div>
     </div>
   );

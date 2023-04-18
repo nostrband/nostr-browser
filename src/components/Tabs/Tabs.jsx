@@ -11,7 +11,7 @@ export const Tabs = ({ data, setFilter, filter, changeFilter }) => {
   return (
     <>
       {data.length > 0 && (
-        <div className = 'tab--mainContainer'>
+        <div className="tab--mainContainer">
           <div className="tab">
             {data.map((item, index) => (
               <button
@@ -19,6 +19,11 @@ export const Tabs = ({ data, setFilter, filter, changeFilter }) => {
                 onClick={openTab}
                 data-index={index}
                 key={item.url + index}
+                title={
+                  item.url + ' ' + filter[index] === null
+                    ? null
+                    : JSON.stringify(filter[index])
+                }
               >
                 {item.url}{' '}
                 {filter[index] === null ? null : JSON.stringify(filter[index])}

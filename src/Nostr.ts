@@ -1,4 +1,5 @@
 import { Relay, relayInit, Sub } from 'nostr-tools';
+import { toast } from 'react-toastify';
 
 const DEFAULT_RELAYS = [];
 const URL_PREFIX = 'wss://';
@@ -11,21 +12,44 @@ const Nostr = {
   relays: defaultRelays,
   subscriptions: new Map<string, Map<string, Sub>>(),
 
-  addRelay(url: string) {
+  notify(message: string) {
+    toast(message, {
+      position: 'top-left',
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+  },
+
+  addRelay(url: string, callback) {
     let relay = this.relays.get(url);
+
     if (relay) {
       return relay;
     }
+
     relay = relayInit(URL_PREFIX + url);
 
     relay.on('notice', (notice) => {
+      if (notice.includes('rejected: ')) {
+        this.notify(`${notice}`);
+      }
       console.log('notice from ', relay.url, notice);
     });
+
     relay.on('connect', () => {
+      callback({ url: url });
       console.log(`connected to ${relay.url}`);
     });
+
     relay.on('error', () => {
+      this.notify(`Can't connected to relay with ${url}!`);
       console.log(`failed to connect to ${relay.url}`);
+      this.relays.delete(url);
     });
 
     this.relays.set(url, relay);
@@ -33,6 +57,7 @@ const Nostr = {
 
   subscribe(url: string, filter: [], callback) {
     const relay = this.relays.get(url);
+
     if (!relay) return;
 
     const filterMap = this.subscriptions.get(url);
@@ -47,7 +72,6 @@ const Nostr = {
 
   addNewSubscription(relay: Relay, url: string, filter: [], callback) {
     const sub = relay.sub(filter);
-
     sub.on('event', (event) => {
       callback(event);
     });
@@ -67,7 +91,6 @@ const Nostr = {
     let relay = this.relays.get(url);
     if (!relay) return;
     try {
-
       if (relay.status === 3) {
         relay.connect();
       }

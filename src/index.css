@@ -1,22 +1,15 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-}
-
 *,
 *:before,
 *:after {
   box-sizing: border-box;
 }
+
 body {
-  width: 100vh; 
-  height: 100vh;
   background-image: url('./assets/backimage.jpg');
   background-size: cover;
-  background-position: center center; 
-  background-attachment: fixed; 
-  background-repeat: no-repeat;    
-  margin: 0;
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  margin: 0 auto;
   color: aliceblue;
 }

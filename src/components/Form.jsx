@@ -13,20 +13,18 @@ function GetForm({ setActive, onSubmit }) {
   }
 
   return (
-    <div className='form--container'>
-      
-      <form onSubmit={handleSubmit(onSubmitForm)}>
-        <div>
-          <label className = 'form--label' htmlFor="name">Relay URL</label>
-          <input className = 'form--input'
-            id="url"
-            type="text"
-            
-            {...register('url', { required: true, maxLength: 20 })}
-          />
-        </div>
-
-        <button className = 'form--button' type="submit">Add relay</button>
+    <div className="form--container">
+      <form className="form--content" onSubmit={handleSubmit(onSubmitForm)}>
+        <input
+          className="form--input"
+          id="url"
+          type="text"
+          {...register('url', { required: true, maxLength: 20 })}
+          placeholder="Relay URL"
+        />
+        <button className="form--button" type="submit">
+          Add relay
+        </button>
       </form>
     </div>
   );

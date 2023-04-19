@@ -3,6 +3,7 @@ import Dropdown from 'react-dropdown';
 import './Relay.scss';
 import Nostr from '../Nostr';
 import '../variables.scss';
+import {Messages} from "./Messages.jsx";
 
 import 'websocket-polyfill';
 
@@ -127,7 +128,7 @@ export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
       <div id="messages" className="relay--container__messages">
         {messages.map((message) => (
           <div className="messages" key={message.id + ind}>
-            {JSON.stringify(message)}
+            <Messages message={message}/>
           </div>
         ))}
       </div>

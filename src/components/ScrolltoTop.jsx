@@ -26,7 +26,7 @@ const ScrollToTop = () => {
                     className="scroll--container__btn"
                     onClick={gotoTop}
                 >
-                    Вверх страницы
+                    Scroll Top
                 </button>
             )}
         </div>

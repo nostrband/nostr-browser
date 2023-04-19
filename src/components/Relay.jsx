@@ -17,8 +17,7 @@ export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
     '{"kinds": [0], "limit": 1}',
     '{"kinds": [30023], "limit": 1}',
     '{"kinds": [9735], "limit": 1}',
-    '{"kinds": [1], "limit": 1}',
-    '{"fff": [1]}',
+    '{"kinds": [1], "limit": 1}'
   ]);
 
   const notify = (message) => {

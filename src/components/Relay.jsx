@@ -3,7 +3,7 @@ import Dropdown from 'react-dropdown';
 import './Relay.scss';
 import Nostr from '../Nostr';
 import '../variables.scss';
-import {Messages} from "./Messages.jsx";
+import {Messages} from "./messages/Messages.jsx";
 
 import 'websocket-polyfill';
 

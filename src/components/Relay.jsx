@@ -8,6 +8,7 @@ import 'websocket-polyfill';
 
 import { toast } from 'react-toastify';
 
+
 export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
   const [messages, setMessages] = useState([]);
   const [filterValue, setFilterValue] = useState('');
@@ -148,7 +149,10 @@ export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
           {' '}
           update filter
         </button>
+        
       </div>
+      
     </div>
+    
   );
 };

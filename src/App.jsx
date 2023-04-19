@@ -8,6 +8,8 @@ import { Tabs } from './components/Tabs/Tabs';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Nostr from './Nostr';
+import ScrolltoTop from './components/ScrolltoTop';
+
 
 function App() {
   const [tabs, setTabs] = useState([{ url: 'relay.nostr.band' }]);
@@ -75,9 +77,14 @@ function App() {
           <GetForm setActive={closeModal} onSubmit={addTab} />
         </Modal>
         <ToastContainer />
+        <ScrolltoTop />
       </div>
+      
     </div>
+    
+
   );
+
 }
 
 export default App;

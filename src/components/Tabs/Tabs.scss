@@ -16,7 +16,7 @@
   height: 48.5px;
   background-color: $backgroundFields;
   color: $colorText;
-  border-radius: $border-radius;
+  border-radius: 10px 10px 0px 0px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -26,7 +26,6 @@
 .tablinks.active {
   background-color: $colorText;
   color: black;
-  border-radius: $border-radius;
 }
 
 .tabcontent {

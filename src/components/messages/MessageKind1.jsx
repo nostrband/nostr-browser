@@ -1,9 +1,10 @@
 import React from 'react';
+import './Messages.scss';
 
 export const MessageKind1 = ({message}) => {
 
     return (
-        <div>
+        <div className="MessageKind1Div">
             {message.content}
         </div>
     );

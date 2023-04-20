@@ -10,10 +10,10 @@
 .tablinks {
   border: $borderFields;
   cursor: pointer;
-  padding: 12px;
+  padding: 14px;
   transition: 0.3s;
   font-size: 1rem;
-  height: 48.5px;
+  height: 52px;
   background-color: $backgroundFields;
   color: $colorText;
   border-radius: 10px 10px 0px 0px;
@@ -21,6 +21,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 300px;
+  position: relative;
 }
 
 .tablinks.active {
@@ -41,4 +42,14 @@
 
 .tabcontent.active {
   display: block;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  svg {
+    pointer-events: none;
+  }
 }

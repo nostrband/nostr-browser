@@ -10,15 +10,24 @@ import 'react-toastify/dist/ReactToastify.css';
 import Nostr from './Nostr';
 import ScrolltoTop from './components/ScrolltoTop';
 
-
 function App() {
   const [tabs, setTabs] = useState([{ url: 'relay.nostr.band' }]);
   const [filter, setFilter] = useState([{ kinds: [1], limit: 1 }]);
   const [isOpen, setIsOpen] = useState(false);
   const [active, setActive] = useState(0);
+  const [linkSub, setLinkSub] = useState([]);
 
   const changeActiveTab = (ind) => {
     setActive(ind);
+  };
+
+  const addFirstLinkSub = () => {
+    linkSub.push(null);
+    setLinkSub(linkSub);
+  };
+
+  const changeLinkSub = (sub, ind) => {
+    linkSub.splice(ind, 1, sub);
   };
 
   const openModal = () => setIsOpen(true);
@@ -28,6 +37,7 @@ function App() {
     setTabs([...tabs, data]);
     const index = active + 1;
     filter.push(null);
+    addFirstLinkSub();
     setFilter(filter);
     changeActiveTab(index);
   };
@@ -58,6 +68,28 @@ function App() {
     setFilter([...filter]);
   };
 
+  const unsubscribe = (value) => {
+    linkSub[value].unsub();
+    const newLink = linkSub.filter((_, ind) => ind !== value);
+    setLinkSub(newLink);
+    Nostr.subscriptions
+      .get(tabs[value].url)
+      .delete(JSON.stringify([filter[value]]));
+  };
+
+  const closeTab = (value) => {
+    if (filter[value]) {
+      unsubscribe(value);
+    }
+    const changeTabs = tabs.filter((_, ind) => ind !== value);
+    const changeFilters = filter.filter((_, ind) => ind !== value);
+    if (value <= active) {
+      changeActiveTab(active - 1);
+    }
+    setTabs(changeTabs);
+    setFilter(changeFilters);
+  };
+
   return (
     <div className="App">
       <button className="main--button" onClick={openModal}>
@@ -72,6 +104,9 @@ function App() {
           changeFilter={changeFilter}
           active={active}
           changeActiveTab={changeActiveTab}
+          closeTab={closeTab}
+          unsubscribe={unsubscribe}
+          changeLinkSub={changeLinkSub}
         />
         <Modal activeModal={isOpen} setActive={closeModal}>
           <GetForm setActive={closeModal} onSubmit={addTab} />
@@ -79,12 +114,8 @@ function App() {
         <ToastContainer />
         <ScrolltoTop />
       </div>
-      
     </div>
-    
-
   );
-
 }
 
 export default App;

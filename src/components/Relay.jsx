@@ -3,14 +3,21 @@ import Dropdown from 'react-dropdown';
 import './Relay.scss';
 import Nostr from '../Nostr';
 import '../variables.scss';
-import {Messages} from "./messages/Messages.jsx";
+import { Messages } from './messages/Messages.jsx';
 
 import 'websocket-polyfill';
 
 import { toast } from 'react-toastify';
 
-
-export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
+export const Relay = ({
+  url,
+  setFilter,
+  ind,
+  changeFilter,
+  filter,
+  unsubscribe,
+  changeLinkSub,
+}) => {
   const [messages, setMessages] = useState([]);
   const [filterValue, setFilterValue] = useState('');
   const [filterInputValue, setFilterInputValue] = useState('');
@@ -18,7 +25,7 @@ export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
     '{"kinds": [0], "limit": 1}',
     '{"kinds": [30023], "limit": 1}',
     '{"kinds": [9735], "limit": 1}',
-    '{"kinds": [1], "limit": 1}'
+    '{"kinds": [1], "limit": 1}',
   ]);
 
   const notify = (message) => {
@@ -33,6 +40,7 @@ export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
       theme: 'light',
     });
   };
+
   const [defaultOption, setDefaultOption] = useState('');
 
   const onPredefinedSelect = (data) => {
@@ -59,11 +67,14 @@ export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
   }, [options]);
 
   useEffect(() => {
-    if (ind === 0) {
+    if (ind === 0 && filter) {
       connectToRelay(url, () => {});
-      subscribeToRelay(url, [{ kinds: [1], limit: 1 }]);
+      const sub = subscribeToRelay(url, [{ kinds: [1], limit: 1 }]);
+      changeLinkSub(sub, ind);
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const addMessage = (data) => {
     setMessages([data, ...ubiStateRef.current]);
   };
@@ -93,19 +104,23 @@ export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
       );
     }
     setDefaultOption('');
-
-    if (filter === undefined) {
+    if (filter === undefined && filter !== 0) {
       if (newFilter.startsWith('{') && newFilter.endsWith('}')) {
-        subscribeToRelay(url, [JSON.parse(newFilter)]);
         setFilter(newFilter, ind);
+        const sub = subscribeToRelay(url, [JSON.parse(newFilter)]);
+        changeLinkSub(sub, ind);
       } else {
         notify('Wrong data!');
         changeFilter(null, ind);
       }
     } else {
       if (newFilter.startsWith('{') && newFilter.endsWith('}')) {
-        subscribeToRelay(url, [JSON.parse(newFilter)]);
+        if (filter !== null) {
+          unsubscribe(filter[ind]);
+        }
         changeFilter(JSON.parse(newFilter), ind);
+        const sub = subscribeToRelay(url, [JSON.parse(newFilter)]);
+        changeLinkSub(sub, ind);
       } else {
         notify('Wrong data!');
         changeFilter(null, ind);
@@ -119,7 +134,7 @@ export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
   };
 
   const subscribeToRelay = (relayUrl, filter) => {
-    Nostr.subscribe(relayUrl, filter, (data) => addMessage(data));
+    return Nostr.subscribe(relayUrl, filter, (data) => addMessage(data));
   };
 
   return (
@@ -127,8 +142,8 @@ export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
       <br />
       <div id="messages" className="relay--container__messages">
         {messages.map((message) => (
-          <div className="messages" key={message.id + ind}>
-            <Messages message={message}/>
+          <div className="messages" key={ind + message.id + ind}>
+            <Messages message={message} />
           </div>
         ))}
       </div>
@@ -149,10 +164,7 @@ export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
           {' '}
           update filter
         </button>
-        
       </div>
-      
     </div>
-    
   );
 };

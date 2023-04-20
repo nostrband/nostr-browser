@@ -1,3 +1,5 @@
+import { VscClose } from 'react-icons/vsc';
+
 import './Tabs.scss';
 
 import { Relay } from '../Relay';
@@ -9,8 +11,16 @@ export const Tabs = ({
   changeFilter,
   active,
   changeActiveTab,
+  closeTab,
+  unsubscribe,
+  changeLinkSub,
 }) => {
   const openTab = (event) => changeActiveTab(+event.target.dataset.index);
+
+  const close = (event) => {
+    event.stopPropagation();
+    closeTab(+event.target.dataset.close);
+  };
 
   return (
     <>
@@ -29,6 +39,9 @@ export const Tabs = ({
                     : JSON.stringify(filter[index])
                 }
               >
+                <div className="closeIcon" onClick={close} data-close={index}>
+                  <VscClose size={18} />
+                </div>
                 {item.url}{' '}
                 {filter[index] === null ? null : JSON.stringify(filter[index])}
               </button>
@@ -46,6 +59,8 @@ export const Tabs = ({
                 changeFilter={changeFilter}
                 filter={filter[index]}
                 changeActiveTab={changeActiveTab}
+                unsubscribe={unsubscribe}
+                changeLinkSub={changeLinkSub}
               />
             </div>
           ))}

@@ -3,12 +3,11 @@ import Dropdown from 'react-dropdown';
 import './Relay.scss';
 import Nostr from '../Nostr';
 import '../variables.scss';
-import {Messages} from "./messages/Messages.jsx";
+import { Messages } from './messages/Messages.jsx';
 
 import 'websocket-polyfill';
 
 import { toast } from 'react-toastify';
-
 
 export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
   const [messages, setMessages] = useState([]);
@@ -18,7 +17,8 @@ export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
     '{"kinds": [0], "limit": 1}',
     '{"kinds": [30023], "limit": 1}',
     '{"kinds": [9735], "limit": 1}',
-    '{"kinds": [1], "limit": 1}'
+    '{"kinds": [1], "limit": 1}',
+    '{"kinds": [3], "limit": 1}',
   ]);
 
   const notify = (message) => {
@@ -128,7 +128,7 @@ export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
       <div id="messages" className="relay--container__messages">
         {messages.map((message) => (
           <div className="messages" key={message.id + ind}>
-            <Messages message={message}/>
+            <Messages message={message} />
           </div>
         ))}
       </div>
@@ -149,10 +149,7 @@ export const Relay = ({ url, setFilter, ind, changeFilter, filter }) => {
           {' '}
           update filter
         </button>
-        
       </div>
-      
     </div>
-    
   );
 };

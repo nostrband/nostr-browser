@@ -4,29 +4,36 @@
   overflow: hidden;
   display: flex;
   width: 100%;
-  gap: 5px;
+  //gap: 5px;
 }
 
 .tablinks {
-  border: $borderFields;
   cursor: pointer;
-  padding: 14px;
+  padding: 12px 24px;
   transition: 0.3s;
-  font-size: 1rem;
-  height: 52px;
+  font-size: 13px;
+  height: 48.5px;
   background-color: $backgroundFields;
   color: $colorText;
-  border-radius: 10px 10px 0px 0px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 300px;
   position: relative;
+  border: none;
+}
+.tablinks:nth-child(n + 2) {
+  margin-left: -22px;
 }
 
 .tablinks.active {
   background-color: $colorText;
   color: black;
+  font-weight: bold;
+  border: none !important;
+  z-index: 1;
 }
 
 .tabcontent {
@@ -42,6 +49,13 @@
 
 .tabcontent.active {
   display: block;
+}
+.tablinks:not(:last-child) {
+  border-right: 3px solid rgba(80, 11, 48, 0.9);
+  border-top: none;
+}
+.tablinks:not(:first-child) {
+  border-left: 3px solid rgba(80, 11, 48, 0.9);
 }
 
 .closeIcon {

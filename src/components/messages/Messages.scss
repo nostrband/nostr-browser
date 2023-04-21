@@ -14,7 +14,8 @@
   max-width: 100%;
 }
 
-.MessageKind0Table td, .MessageKind0Table th {
+.MessageKind0Table td,
+.MessageKind0Table th {
   border: 3px solid #352537;
 }
 
@@ -25,4 +26,12 @@
 
 .MessageKind0Table tr td:first-child {
   max-width: 50px;
+}
+
+.title {
+  margin: 10px 40px;
+}
+
+.listItem {
+  font-size: 1.1rem;
 }

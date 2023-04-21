@@ -42,7 +42,7 @@ export const Tabs = ({
                 <div className="closeIcon" onClick={close} data-close={index}>
                   <VscClose size={18} />
                 </div>
-                {item.url}{' '}
+                {item.url} <br />
                 {filter[index] === null ? null : JSON.stringify(filter[index])}
               </button>
             ))}

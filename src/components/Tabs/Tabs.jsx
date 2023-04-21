@@ -29,7 +29,7 @@ export const Tabs = ({
                     : JSON.stringify(filter[index])
                 }
               >
-                {item.url}{' '}
+                {item.url}{' '}<br />
                 {filter[index] === null ? null : JSON.stringify(filter[index])}
               </button>
             ))}

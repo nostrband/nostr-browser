@@ -1,6 +1,7 @@
 import { MessageKind1 } from './MessageKind1.jsx';
 import { MessageKind0 } from './MessageKind0.jsx';
 import { MessageKind3 } from './MessageKind3.jsx';
+import { MessageKindOther } from './MessageKindOther.jsx';
 
 export const Messages = ({ message }) => {
   const messagesMap = {
@@ -9,5 +10,13 @@ export const Messages = ({ message }) => {
     3: <MessageKind3 message={message} />,
   };
 
-  return <div>{messagesMap[message.kind]}</div>;
+  return (
+    <div>
+      {messagesMap[message.kind] ? (
+        messagesMap[message.kind]
+      ) : (
+        <MessageKindOther message={message} />
+      )}
+    </div>
+  );
 };

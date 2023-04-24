@@ -2,8 +2,6 @@ import { VscClose } from 'react-icons/vsc';
 
 import './Tabs.scss';
 
-import { Relay } from '../Relay';
-
 export const Tabs = ({
   data,
   setFilter,
@@ -25,46 +23,33 @@ export const Tabs = ({
   return (
     <>
       {data.length > 0 && (
-        <div className="tab--mainContainer">
-          <div className="tab">
-            {data.map((item, index) => (
-              <button
-                className={`tablinks ${index === active ? 'active' : ''}`}
-                onClick={openTab}
-                data-index={index}
-                key={item.url + index}
-                title={
-                  item.url + ' ' + filter[index] === null
-                    ? null
-                    : JSON.stringify(filter[index])
-                }
-              >
-                <div className="closeIcon" onClick={close} data-close={index}>
-                  <VscClose size={18} />
+          <div className="tab--mainContainer">
+
+            {data.map((item) => (
+                <div className="tab">
+                  <p> {item.index}</p>
+                  <button
+                      className={`tablinks ${item.index === active ? 'active' : ''}`}
+                      onClick={openTab}
+                      data-index={item.index}
+                      key={item.url + item.index}
+                      title={
+                        item.url + ' ' + filter[item.index] === null
+                            ? null
+                            : JSON.stringify(filter[item.index])
+                      }
+                  >
+                    <div className="closeIcon" onClick={close} data-close={item.index}>
+                      <VscClose size={18}/>
+                    </div>
+                    {item.url} <br/>
+                    {filter[item.index] === null ? null : JSON.stringify(filter[item.index])}
+                  </button>
                 </div>
-                {item.url} <br />
-                {filter[index] === null ? null : JSON.stringify(filter[index])}
-              </button>
             ))}
-          </div>
-          {data.map((item, index) => (
-            <div
-              className={`tabcontent ${index === active ? 'active' : ''}`}
-              key={index}
-            >
-              <Relay
-                url={item.url}
-                setFilter={setFilter}
-                ind={index}
-                changeFilter={changeFilter}
-                filter={filter[index]}
-                changeActiveTab={changeActiveTab}
-                unsubscribe={unsubscribe}
-                changeLinkSub={changeLinkSub}
-              />
-            </div>
-          ))}
-        </div>
+            {data.map((item) => (<div className={`tabcontent ${item.index === active ? 'active' : ''}`} key={item.index+100}
+                >
+                  {item.relay}</div>))}</div>
       )}
     </>
   );

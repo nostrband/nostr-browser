@@ -24,9 +24,9 @@
   position: relative;
   border: none;
 }
-.tablinks:nth-child(n + 2) {
-  margin-left: -22px;
-}
+// .tablinks:nth-child(n + 2) {
+//   margin-left: -22px;
+// }
 
 .tablinks.active {
   background-color: $colorText;

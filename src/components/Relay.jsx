@@ -1,17 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
 import Dropdown from 'react-dropdown';
-import './Relay.scss';
-import Nostr from '../Nostr';
-import '../variables.scss';
-import { Messages } from './messages/Messages.jsx';
-
 import 'websocket-polyfill';
-
 import { toast } from 'react-toastify';
+import { useEffect, useRef, useState } from 'react';
+
+import './Relay.scss';
+import '../variables.scss';
+import Nostr from '../Nostr';
+import { Messages } from './messages/Messages.jsx';
+import { options } from '../utils/options';
 
 export const Relay = ({
   url,
-  setFilter,
   ind,
   changeFilter,
   filter,
@@ -21,20 +20,11 @@ export const Relay = ({
   const [messages, setMessages] = useState([]);
   const [filterValue, setFilterValue] = useState('');
   const [filterInputValue, setFilterInputValue] = useState('');
-  const [options, setOptions] = useState([
-    '{"kinds": [0], "limit": 1}',
-    '{"kinds": [30023], "limit": 1}',
-    '{"kinds": [9735], "limit": 1}',
-    '{"kinds": [1], "limit": 1}',
-    '{"kinds": [3], "limit": 1}',
-    '{"kinds": [7], "limit": 1}',
-    '{"kinds": [6], "limit": 1}',
-  ]);
 
   const notify = (message) => {
     toast(message, {
       position: 'top-left',
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -49,11 +39,9 @@ export const Relay = ({
   const onPredefinedSelect = (data) => {
     setFilterInputValue('');
     if (data.value && !options.includes(data.value)) {
-      setOptions(
-        [...ubiStateRef.current2, data.value].sort((a, b) =>
-          a.toUpperCase().localeCompare(b.toUpperCase()),
-        ),
-      );
+      options
+        .push(data.value)
+        .sort((a, b) => a.toUpperCase().localeCompare(b.toUpperCase()));
       setDefaultOption('');
     }
     setDefaultOption(data.value);
@@ -66,11 +54,7 @@ export const Relay = ({
   }, [messages]);
 
   useEffect(() => {
-    ubiStateRef.current2 = options;
-  }, [options]);
-
-  useEffect(() => {
-    if (ind === 0 && filter) {
+    if (ind === 0) {
       connectToRelay(url, () => {});
       const sub = subscribeToRelay(url, [{ kinds: [1], limit: 1 }]);
       changeLinkSub(sub, ind);
@@ -95,39 +79,32 @@ export const Relay = ({
       setDefaultOption('');
       return;
     }
-    setMessages([]);
 
+    setMessages([]);
     setFilterValue(newFilter);
     setFilterInputValue('');
+
     if (!options.includes(newFilter)) {
-      setOptions(
-        [...ubiStateRef.current2, newFilter].sort((a, b) =>
-          a.toUpperCase().localeCompare(b.toUpperCase()),
-        ),
-      );
+      options.push(newFilter);
+      options.sort((a, b) => a.toUpperCase().localeCompare(b.toUpperCase()));
     }
+
     setDefaultOption('');
-    if (filter === undefined && filter !== 0) {
-      if (newFilter.startsWith('{') && newFilter.endsWith('}')) {
-        setFilter(newFilter, ind);
-        const sub = subscribeToRelay(url, [JSON.parse(newFilter)]);
-        changeLinkSub(sub, ind);
-      } else {
-        notify('Wrong data!');
-        changeFilter(null, ind);
+
+    if (
+      newFilter.startsWith('{"kinds":[') ||
+      (newFilter.startsWith('{"kinds": [') && newFilter.endsWith('}'))
+    ) {
+      if (filter[ind] !== null) {
+        unsubscribe(ind, url);
       }
+
+      changeFilter(newFilter, ind);
+      const sub = subscribeToRelay(url, [JSON.parse(newFilter)]);
+      changeLinkSub(sub, ind);
     } else {
-      if (newFilter.startsWith('{') && newFilter.endsWith('}')) {
-        if (filter !== null) {
-          unsubscribe(filter[ind]);
-        }
-        changeFilter(JSON.parse(newFilter), ind);
-        const sub = subscribeToRelay(url, [JSON.parse(newFilter)]);
-        changeLinkSub(sub, ind);
-      } else {
-        notify('Wrong data!');
-        changeFilter(null, ind);
-      }
+      notify('Wrong data!');
+      changeFilter(null, ind);
     }
   };
 

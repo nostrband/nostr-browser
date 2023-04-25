@@ -38,6 +38,9 @@ const Nostr = {
       if (notice.includes('rejected: ')) {
         this.notify(`${notice}`);
       }
+      if (notice.includes('ERROR: ')) {
+        this.notify(`${notice}`);
+      }
       console.log('notice from ', relay.url, notice);
     });
 

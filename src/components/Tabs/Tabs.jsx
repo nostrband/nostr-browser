@@ -2,17 +2,7 @@ import { VscClose } from 'react-icons/vsc';
 
 import './Tabs.scss';
 
-export const Tabs = ({
-  data,
-  setFilter,
-  filter,
-  changeFilter,
-  active,
-  changeActiveTab,
-  closeTab,
-  unsubscribe,
-  changeLinkSub,
-}) => {
+export const Tabs = ({ filter, active, changeActiveTab, closeTab, tabs }) => {
   const openTab = (event) => changeActiveTab(+event.target.dataset.index);
 
   const close = (event) => {
@@ -22,34 +12,42 @@ export const Tabs = ({
 
   return (
     <>
-      {data.length > 0 && (
-          <div className="tab--mainContainer">
-
-            {data.map((item) => (
-                <div className="tab">
-                  <p> {item.index}</p>
-                  <button
-                      className={`tablinks ${item.index === active ? 'active' : ''}`}
-                      onClick={openTab}
-                      data-index={item.index}
-                      key={item.url + item.index}
-                      title={
-                        item.url + ' ' + filter[item.index] === null
-                            ? null
-                            : JSON.stringify(filter[item.index])
-                      }
-                  >
-                    <div className="closeIcon" onClick={close} data-close={item.index}>
-                      <VscClose size={18}/>
-                    </div>
-                    {item.url} <br/>
-                    {filter[item.index] === null ? null : JSON.stringify(filter[item.index])}
-                  </button>
-                </div>
-            ))}
-            {data.map((item) => (<div className={`tabcontent ${item.index === active ? 'active' : ''}`} key={item.index+100}
+      {tabs.length > 0 && (
+        <div className="tab--mainContainer">
+          <div className="tab">
+            {tabs.map((item) => (
+              <button
+                className={`tablinks ${item.index === active ? 'active' : ''}`}
+                onClick={openTab}
+                data-index={item.index}
+                title={
+                  item.url +
+                  ' ' +
+                  (item.filter === null ? null : JSON.stringify(item.filter))
+                }
+                key={item.url + item.index}
+              >
+                <div
+                  className="closeIcon"
+                  onClick={close}
+                  data-close={item.index}
                 >
-                  {item.relay}</div>))}</div>
+                  <VscClose size={18} />
+                </div>
+                {item.url} <br />
+                {filter[item.index] === null ? null : filter[item.index]}
+              </button>
+            ))}
+          </div>
+          {tabs.map((item) => (
+            <div
+              className={`tabcontent ${item.index === active ? 'active' : ''}`}
+              key={item.index}
+            >
+              {item.relay}
+            </div>
+          ))}
+        </div>
       )}
     </>
   );

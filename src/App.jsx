@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import './App.scss';
 import './variables.scss';
 import { Modal } from './components/Modal';
@@ -6,58 +9,50 @@ import GetForm from './components/Form';
 import imgGlobal from './assets/chat.png';
 import { Tabs } from './components/Tabs/Tabs';
 import { Relay } from './components/Relay';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import Nostr from './Nostr';
 import ScrolltoTop from './components/ScrolltoTop';
+import { getRandomInt } from './utils/helpers';
 
 function App() {
-
-  const [filter, setFilter] = useState([{ kinds: [1], limit: 1 }]);
+  const [filter, setFilter] = useState({ 0: '{ kinds: [1], limit: 1 }' });
   const [isOpen, setIsOpen] = useState(false);
   const [active, setActive] = useState(0);
-  const [linkSub, setLinkSub] = useState([]);
+  const [linkSub, setLinkSub] = useState({});
 
   const changeActiveTab = (ind) => {
     setActive(ind);
   };
 
-  const addFirstLinkSub = () => {
-    linkSub.push(null);
-    setLinkSub(linkSub);
-  };
-
   const changeLinkSub = (sub, ind) => {
-    linkSub.splice(ind, 1, sub);
+    linkSub[ind] = sub;
+    setLinkSub(linkSub);
   };
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
   const isConnectedSuccess = (data) => {
-      console.log(1111)
-      console.log(data)
-      console.log(22222)
-    const eee = tabs.length;
+    const elementIndex = getRandomInt();
+    filter[elementIndex] = null;
+    setFilter({ ...filter });
 
-      data.relay = <Relay ind={eee}
-                          url={'relay.nostr.band'}
-                          setFilter={addFilter}
-                          changeFilter={changeFilter}
-                          unsubscribe={unsubscribe}
-                          changeLinkSub={changeLinkSub}/>
+    data.relay = (
+      <Relay
+        ind={elementIndex}
+        url={data.url}
+        changeFilter={changeFilter}
+        unsubscribe={unsubscribe}
+        changeLinkSub={changeLinkSub}
+        filter={filter}
+        tabs={tabs}
+      />
+    );
 
-      console.log(333)
-      console.log(data)
-      console.log(444)
-    data.index = eee;
-
-    setTabs([...tabs, data]);
-    const index = active + 1;
-    filter.push(null);
-    addFirstLinkSub();
-    setFilter(filter);
-    changeActiveTab(index);
+    data.index = elementIndex;
+    tabs.push(data);
+    setTabs([...tabs]);
+    changeActiveTab(elementIndex);
+    changeLinkSub(null, elementIndex);
   };
 
   const connectToRelay = (data, callback) => {
@@ -68,61 +63,66 @@ function App() {
   const addTab = (data) => {
     if (Nostr.relays.has(data.url)) {
       isConnectedSuccess(data);
-    }
-    connectToRelay(data.url, (data) => isConnectedSuccess(data));
-  };
-
-  const addFilter = (value) => {
-    if (filter[active]) {
-      filter.splice(active, 1, JSON.parse(value));
     } else {
-      filter.push(JSON.parse(value));
+      connectToRelay(data.url, (data) => isConnectedSuccess(data));
     }
-    setFilter([...filter]);
   };
 
-  const changeFilter = (value) => {
-    filter.splice(active, 1, value);
-    setFilter([...filter]);
+  const changeFilter = (newFilter, ind) => {
+    filter[ind] = newFilter;
+    setFilter({ ...filter });
   };
 
   const unsubscribe = (value) => {
-      /*console.log(999899, value)
+    const item = tabs.find((item) => item.index === value);
     linkSub[value].unsub();
-    const newLink = linkSub.filter((_, ind) => ind !== value);
-    setLinkSub(newLink);
-    Nostr.subscriptions
-      .get(tabs[value].url)
-      .delete(JSON.stringify([filter[value]]));*/
+    Nostr.subscriptions.get(item.url).delete(JSON.stringify([filter[value]]));
   };
 
   const closeTab = (value) => {
+    const index = tabs.findIndex((item) => item.index === value);
+
     if (filter[value]) {
       unsubscribe(value);
     }
-    console.log(value, "   ", 989898989898998)
-    const changeTabs = tabs.filter((_, ind) => ind !== value);
-    const changeFilters = filter.filter((_, ind) => ind !== value);
-    if (value <= active) {
-      changeActiveTab(active - 1);
-    }
-    console.log(changeTabs, "   ", 4565656565656)
 
+    const keys = Object.keys(filter);
+    const newFilterKeys = keys.filter((key) => +key !== value);
+    const newFilters = {};
+
+    newFilterKeys.forEach((key) => {
+      newFilters[key] = filter[key];
+    });
+
+    if (value === active && index !== 0) {
+      changeActiveTab(tabs[index - 1].index);
+    }
+
+    if (value === active && index === 0 && tabs.length > 1) {
+      changeActiveTab(tabs[index + 1].index);
+    }
+
+    const changeTabs = tabs.filter((_, ind) => ind !== index);
     setTabs(changeTabs);
-    setFilter(changeFilters);
+    setFilter({ ...newFilters });
   };
 
-  const [tabs, setTabs] = useState([{
-        url: 'relay.nostr.band', relay: <Relay
-            ind={0}
-            url={'relay.nostr.band'}
-            setFilter={addFilter}
-            filter={filter}
-            changeFilter={changeFilter}
-            unsubscribe={unsubscribe}
-            changeLinkSub={changeLinkSub}/>,
-    index: 0
-    }]);
+  const [tabs, setTabs] = useState([
+    {
+      url: 'relay.nostr.band',
+      relay: (
+        <Relay
+          ind={0}
+          url={'relay.nostr.band'}
+          filter={filter}
+          changeFilter={changeFilter}
+          unsubscribe={unsubscribe}
+          changeLinkSub={changeLinkSub}
+        />
+      ),
+      index: 0,
+    },
+  ]);
 
   return (
     <div className="App">
@@ -132,8 +132,6 @@ function App() {
       </button>
       <div className="app--tabs">
         <Tabs
-          data={tabs}
-          setFilter={addFilter}
           filter={filter}
           changeFilter={changeFilter}
           active={active}
@@ -141,6 +139,7 @@ function App() {
           closeTab={closeTab}
           unsubscribe={unsubscribe}
           changeLinkSub={changeLinkSub}
+          tabs={tabs}
         />
         <Modal activeModal={isOpen} setActive={closeModal}>
           <GetForm setActive={closeModal} onSubmit={addTab} />

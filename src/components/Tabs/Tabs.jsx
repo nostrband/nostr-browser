@@ -1,52 +1,50 @@
+import { VscClose } from 'react-icons/vsc';
+
 import './Tabs.scss';
 
-import { Relay } from '../Relay';
-
-export const Tabs = ({
-  data,
-  setFilter,
-  filter,
-  changeFilter,
-  active,
-  changeActiveTab,
-}) => {
+export const Tabs = ({ filter, active, changeActiveTab, closeTab, tabs }) => {
   const openTab = (event) => changeActiveTab(+event.target.dataset.index);
+
+  const close = (event) => {
+    event.stopPropagation();
+    closeTab(+event.target.dataset.close);
+  };
 
   return (
     <>
-      {data.length > 0 && (
+      {tabs.length > 0 && (
         <div className="tab--mainContainer">
           <div className="tab">
-            {data.map((item, index) => (
+            {tabs.map((item) => (
               <button
-                className={`tablinks ${index === active ? 'active' : ''}`}
+                className={`tablinks ${item.index === active ? 'active' : ''}`}
                 onClick={openTab}
-                data-index={index}
-                key={item.url + index}
+                data-index={item.index}
                 title={
-                  item.url + ' ' + filter[index] === null
-                    ? null
-                    : JSON.stringify(filter[index])
+                  item.url +
+                  ' ' +
+                  (item.filter === null ? null : JSON.stringify(item.filter))
                 }
+                key={item.url + item.index}
               >
-                {item.url}{' '}<br />
-                {filter[index] === null ? null : JSON.stringify(filter[index])}
+                <div
+                  className="closeIcon"
+                  onClick={close}
+                  data-close={item.index}
+                >
+                  <VscClose size={18} />
+                </div>
+                {item.url} <br />
+                {item.filter === null ? null : item.filter}
               </button>
             ))}
           </div>
-          {data.map((item, index) => (
+          {tabs.map((item) => (
             <div
-              className={`tabcontent ${index === active ? 'active' : ''}`}
-              key={index}
+              className={`tabcontent ${item.index === active ? 'active' : ''}`}
+              key={item.index}
             >
-              <Relay
-                url={item.url}
-                setFilter={setFilter}
-                ind={index}
-                changeFilter={changeFilter}
-                filter={filter[index]}
-                changeActiveTab={changeActiveTab}
-              />
+              {item.relay}
             </div>
           ))}
         </div>

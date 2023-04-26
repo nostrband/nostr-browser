@@ -68,11 +68,6 @@ function App() {
     }
   };
 
-  const changeFilter = (newFilter, ind) => {
-    filter[ind] = newFilter;
-    setFilter({ ...filter });
-  };
-
   const unsubscribe = (value) => {
     const item = tabs.find((item) => item.index === value);
     linkSub[value].unsub();
@@ -107,6 +102,13 @@ function App() {
     setFilter({ ...newFilters });
   };
 
+  const changeFilter = (newFilter, ind) => {
+    const tab =  tabs.find((item) => item.index === ind);
+    tab.filter = newFilter;
+    filter[ind] = newFilter;
+    setFilter({ ...filter });
+  };
+
   const [tabs, setTabs] = useState([
     {
       url: 'relay.nostr.band',
@@ -121,6 +123,7 @@ function App() {
         />
       ),
       index: 0,
+      filter: '{ kinds: [1], limit: 1 }'
     },
   ]);
 
@@ -133,7 +136,6 @@ function App() {
       <div className="app--tabs">
         <Tabs
           filter={filter}
-          changeFilter={changeFilter}
           active={active}
           changeActiveTab={changeActiveTab}
           closeTab={closeTab}

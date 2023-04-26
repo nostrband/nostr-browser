@@ -35,7 +35,7 @@ export const Tabs = ({ filter, active, changeActiveTab, closeTab, tabs }) => {
                   <VscClose size={18} />
                 </div>
                 {item.url} <br />
-                {filter[item.index] === null ? null : filter[item.index]}
+                {item.filter === null ? null : item.filter}
               </button>
             ))}
           </div>

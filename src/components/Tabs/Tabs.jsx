@@ -2,7 +2,7 @@ import { VscClose } from 'react-icons/vsc';
 
 import './Tabs.scss';
 
-export const Tabs = ({ filter, active, changeActiveTab, closeTab, tabs }) => {
+export const Tabs = ({active, changeActiveTab, closeTab, tabs }) => {
   const openTab = (event) => changeActiveTab(+event.target.dataset.index);
 
   const close = (event) => {

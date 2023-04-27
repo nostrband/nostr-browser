@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -44,7 +44,6 @@ function App() {
         unsubscribe={unsubscribe}
         changeLinkSub={changeLinkSub}
         filter={filter}
-        tabs={tabs}
       />
     );
 
@@ -103,10 +102,17 @@ function App() {
   };
 
   const changeFilter = (newFilter, ind) => {
-    const tab =  tabs.find((item) => item.index === ind);
-    tab.filter = newFilter;
+    const updatedTabs = ubiStateRef.current.map((item) => {
+      if (item.index === ind) {
+        item.filter = newFilter;
+      }
+      return item;
+    });
+    //setTabs(ubiStateRef.current)
+    setTabs([...updatedTabs]);
+    //setTabs([updatedTabs, ...]);
     filter[ind] = newFilter;
-    setFilter({ ...filter });
+    setFilter({...filter});
   };
 
   const [tabs, setTabs] = useState([
@@ -127,6 +133,12 @@ function App() {
     },
   ]);
 
+  const ubiStateRef = useRef();
+
+  useEffect(() => {
+    ubiStateRef.current = tabs;
+  }, [tabs]);
+
   return (
     <div className="App">
       <button className="main--button" onClick={openModal}>
@@ -135,7 +147,6 @@ function App() {
       </button>
       <div className="app--tabs">
         <Tabs
-          filter={filter}
           active={active}
           changeActiveTab={changeActiveTab}
           closeTab={closeTab}

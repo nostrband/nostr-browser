@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -67,10 +67,18 @@ function App() {
     }
   };
 
+  const getUnSubKey = (value) => {
+    const filterUnSub = filter[value];
+    const unSubKeyStr = `[${filterUnSub}]`.replace(/\s/g, '');
+    return unSubKeyStr;
+  };
+
   const unsubscribe = (value) => {
     const item = tabs.find((item) => item.index === value);
     linkSub[value].unsub();
-    Nostr.subscriptions.get(item.url).delete(JSON.stringify([filter[value]]));
+
+    const unSubKey = getUnSubKey(value);
+    Nostr.subscriptions.get(item.url).delete(unSubKey);
   };
 
   const closeTab = (value) => {
@@ -112,7 +120,7 @@ function App() {
     setTabs([...updatedTabs]);
     //setTabs([updatedTabs, ...]);
     filter[ind] = newFilter;
-    setFilter({...filter});
+    setFilter({ ...filter });
   };
 
   const [tabs, setTabs] = useState([
@@ -129,7 +137,7 @@ function App() {
         />
       ),
       index: 0,
-      filter: '{ kinds: [1], limit: 1 }'
+      filter: '{ kinds: [1], limit: 1 }',
     },
   ]);
 

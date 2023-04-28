@@ -1,17 +1,16 @@
 import React from 'react';
 import './MessageFooter.scss';
 
-export const MessageFooter = ({ message }) => {
-  
+export const MessageFooter = ({tags}) => {
     return (
-        <p className = 'message--footer'>
-                Tags:<br /> 
-                {message.tags.map((item) =>
-                <div> {`${item.index + <hr /> }`} key = {item.index}
-                  {item.tags}</div>
+        <> {tags && tags.length > 0 && (
+            <div className='message--footer'>
+                <p>Tags:</p>
+                {tags.map((tag, index) =>
+                    <p key={index}> {tag.map(item => item).join(',')}</p>
                 )}
-
-        </p>
-    
+            </div>
+        )}
+        </>
     );
 };

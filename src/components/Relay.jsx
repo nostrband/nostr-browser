@@ -9,6 +9,7 @@ import '../variables.scss';
 import Nostr from '../Nostr';
 import { Messages } from './messages/Messages.jsx';
 import { options } from '../utils/options';
+import {NostrBandLink} from "./NostrBandLink.jsx";
 
 export const Relay = ({
   url,
@@ -128,7 +129,8 @@ export const Relay = ({
       <div id="messages" className="relay--container__messages">
         {messages.map((message) => (
           <div className="messages" key={ind + message.id + ind}>
-            <p className="messageHeader">Kind: {message.kind} CreatedAt: {formatDate(message.created_at)} ({message.created_at}) Author: {message.pubkey}</p>
+            <p className="messageHeader">Kind: {message.kind} CreatedAt: {formatDate(message.created_at)} ({message.created_at})
+              Author: <NostrBandLink postfix={Nostr.encodeAuthorPubKey(message.pubkey)} value={message.pubkey}/></p>
             <Messages message={message} />
           </div>
         ))}

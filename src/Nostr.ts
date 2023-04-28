@@ -1,4 +1,4 @@
-import { Relay, relayInit, Sub } from 'nostr-tools';
+import { Relay, relayInit, Sub, nip19 } from 'nostr-tools';
 import { toast } from 'react-toastify';
 
 const DEFAULT_RELAYS = [];
@@ -105,6 +105,14 @@ const Nostr = {
   toString(obj: any) {
     return JSON.stringify(obj);
   },
+
+  encodeEventId(eventId: string){
+    return nip19.noteEncode(eventId);
+  },
+
+  encodeAuthorPubKey(pubkey: string){
+    return nip19.npubEncode(pubkey);
+  }
 };
 
 export default Nostr;

@@ -13,7 +13,7 @@ export const MessageKind3 = ({ message }) => {
         {contactList.map((item, ind) => {
           return (
             <li className="listItem" key={item + ind}>
-              {item}
+              {item} <hr />
             </li>
           );
         })}

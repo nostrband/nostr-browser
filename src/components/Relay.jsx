@@ -2,6 +2,7 @@ import Dropdown from 'react-dropdown';
 import 'websocket-polyfill';
 import { toast } from 'react-toastify';
 import { useEffect, useRef, useState } from 'react';
+import moment from 'moment'
 
 import './Relay.scss';
 import '../variables.scss';
@@ -117,12 +118,17 @@ export const Relay = ({
     return Nostr.subscribe(relayUrl, filter, (data) => addMessage(data));
   };
 
+  const formatDate = (createdAt) =>{
+    return moment(createdAt * 1000).format('YYYY-MM-DD HH:mm:SS')
+  }
+
   return (
     <div className="relay--container">
       <br />
       <div id="messages" className="relay--container__messages">
         {messages.map((message) => (
           <div className="messages" key={ind + message.id + ind}>
+            <p className="messageHeader">Kind: {message.kind} CreatedAt: {formatDate(message.created_at)} ({message.created_at}) Author: {message.pubkey}</p>
             <Messages message={message} />
           </div>
         ))}

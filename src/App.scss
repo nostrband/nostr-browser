@@ -2,11 +2,15 @@
   padding: 20px;
   min-height: 100vh;
   position: relative;
-  padding-top: 76px;
 }
 
-.main--button {
-  position:absolute;
-  left:20px;
-  top:20px;
+@mixin make-container($padding-x: $container-padding-x) {
+  width: calc(100vw - 40px);
+  box-sizing: border-box;
+  padding-right: $padding-x;
+  padding-bottom: 40px;
+}
+
+.custom-container {
+  @include make-container(60px);
 }

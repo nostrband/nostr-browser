@@ -1,22 +1,12 @@
 @import '../variables.scss';
 
 .scroll--container {
-    position: relative;
-  }
-  .scroll--container__btn {
-    position: fixed;
-    bottom: 30px;
-    right: 25px;
-    z-index: 20;
-    font-family: $fontFamily;
-    background: $backgroundFields;
-    color: $colorText;
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 12px;
-    border: $borderFields;
-    text-transform: uppercase;
-  }
-  .scroll--container__btn:hover {
-    cursor: pointer;
-  }
+  position: relative;
+}
+
+.scroll--container__btn {
+  position: fixed;
+  bottom: 30px;
+  right: 25px;
+  z-index: 20;
+}

@@ -19,8 +19,8 @@ export const MessageKind0 = ({message}) => {
         );
     }
     return (
-        <div>
-            <table className="MessageKind0Table">
+        <div  className="card-text">
+            <table className="table table-hover">
                 {getTableBodyAsReactElement()}
             </table>
         </div>

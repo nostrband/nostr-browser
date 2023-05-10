@@ -7,7 +7,7 @@ import './Relay.scss';
 import '../variables.scss';
 import Nostr from '../Nostr';
 import { Messages } from './messages/Messages.jsx';
-import { options } from '../utils/options';
+import {options, optionsObj} from '../utils/options';
 
 export const Relay = ({
   url,
@@ -16,96 +16,32 @@ export const Relay = ({
   filter,
   unsubscribe,
   changeLinkSub,
+  filterVal
 }) => {
   const [messages, setMessages] = useState([]);
-  const [filterValue, setFilterValue] = useState('');
-  const [filterInputValue, setFilterInputValue] = useState('');
-
-  const notify = (message) => {
-    toast(message, {
-      position: 'top-left',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    });
-  };
-
-  const [defaultOption, setDefaultOption] = useState('');
-
-  const onPredefinedSelect = (data) => {
-    setFilterInputValue('');
-    if (data.value && !options.includes(data.value)) {
-      options
-        .push(data.value)
-        .sort((a, b) => a.toUpperCase().localeCompare(b.toUpperCase()));
-      setDefaultOption('');
-    }
-    setDefaultOption(data.value);
-  };
 
   const ubiStateRef = useRef();
+
+  useEffect(() => {
+    if (ind === 0) {
+      connectToRelay(url, () => {});
+      const sub = subscribeToRelay(url, [JSON.parse(filterVal)]);
+      changeLinkSub(sub, ind);
+    }
+    if(ind !== 0 && filterVal && filterVal !== ''){
+      connectToRelay(url, () => {});
+      const sub = subscribeToRelay(url, [JSON.parse(filterVal)]);
+      changeLinkSub(sub, ind);
+    }
+    setMessages([])
+  }, [filterVal]);
 
   useEffect(() => {
     ubiStateRef.current = messages;
   }, [messages]);
 
-  useEffect(() => {
-    if (ind === 0) {
-      connectToRelay(url, () => {});
-      const sub = subscribeToRelay(url, [{ kinds: [1], limit: 1 }]);
-      changeLinkSub(sub, ind);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const addMessage = (data) => {
     setMessages([data, ...ubiStateRef.current]);
-  };
-
-  const updateInputFilter = (data) => {
-    setFilterInputValue(data);
-    setDefaultOption('');
-  };
-
-  const updateFilter = () => {
-    const newFilter = defaultOption ? defaultOption : filterInputValue;
-
-    if (filterValue === newFilter) {
-      setFilterInputValue('');
-      setDefaultOption('');
-      return;
-    }
-
-    setMessages([]);
-    setFilterValue(newFilter);
-    setFilterInputValue('');
-
-    if (!options.includes(newFilter)) {
-      options.push(newFilter);
-      options.sort((a, b) => a.toUpperCase().localeCompare(b.toUpperCase()));
-    }
-
-    setDefaultOption('');
-
-    if (
-      newFilter.startsWith('{"kinds":[') ||
-      (newFilter.startsWith('{"kinds": [') && newFilter.endsWith('}'))
-    ) {
-      if (filter[ind] !== null) {
-        unsubscribe(ind, url);
-      }
-
-      changeFilter(newFilter, ind);
-      const sub = subscribeToRelay(url, [JSON.parse(newFilter)]);
-      changeLinkSub(sub, ind);
-    } else {
-      notify('Wrong data!');
-      changeFilter(null, ind);
-    }
   };
 
   const connectToRelay = (data, callback) => {
@@ -126,24 +62,6 @@ export const Relay = ({
             <Messages message={message} />
           </div>
         ))}
-      </div>
-      <div className="relay--container__filter">
-        <input
-          className="relay--container__input"
-          type="text"
-          value={filterInputValue}
-          onChange={(e) => updateInputFilter(e.target.value)}
-        />
-        <Dropdown
-          options={options}
-          onChange={onPredefinedSelect}
-          value={defaultOption}
-          placeholder="Select an option"
-        />
-        <button className="relay--buttonFilter" onClick={updateFilter}>
-          {' '}
-          update filter
-        </button>
       </div>
     </div>
   );

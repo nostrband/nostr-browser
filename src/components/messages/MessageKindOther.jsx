@@ -4,8 +4,8 @@ import './Messages.scss';
 export const MessageKindOther = ({message}) => {
 
     return (
-        <div className="MessageKind1Div">
+        <p className="card-text">
             {JSON.stringify(message)}
-        </div>
+        </p>
     );
 }

@@ -3,9 +3,3 @@
 *:after {
   box-sizing: border-box;
 }
-
-body {
-  margin: 0 auto;
-  color: aliceblue;
-  background: rgb(217 217 203);
-}

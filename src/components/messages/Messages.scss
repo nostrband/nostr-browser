@@ -1,40 +1,5 @@
 @import '../../variables.scss';
 
-.MessageKind1Div {
-  margin: 10px;
-}
-
-.MessageKind0Table {
-  width: 100%;
-  margin: 0px;
-  border-collapse: collapse;
-  border-style: hidden;
-  border-radius: 15px;
-  background: rgb(0, 0, 0);
-  max-width: 100%;
-}
-
-.MessageKind0Table td,
-.MessageKind0Table th {
-  border: 3px solid #352537;
-}
-
-.MessageKind0Table tr td {
-  padding: 5px;
-  max-width: 250px;
-}
-
-.MessageKind0Table tr td:first-child {
-  max-width: 50px;
-}
-
-.title {
-  margin: 10px 40px;
-}
-
-.listItem {
-  font-size: 1.1rem;
-}
-.message--footer {
-  margin: 10px;
+td:last-child {
+    word-break: break-word;
 }

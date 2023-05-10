@@ -71,7 +71,7 @@ export const Tabs = ({active, changeActiveTab, closeTab, tabs, openFilterModal})
                             :
 
                             <div>
-                                <ul className="nav nav-pills nav-fill" id="pills-tab" role="tablist">
+                                <ul className="nav nav-pills nav-fill mb-3" id="pills-tab" role="tablist">
                                     {tabs.map((item) => (
                                         <li className="nav-item tabRelative" role="presentation"
                                             key={item.url + item.index}>

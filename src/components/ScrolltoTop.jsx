@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './ScrolltoTop.scss';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const ScrollToTop = () => {
     const [showTopBtn, setShowTopBtn] = useState(false);
@@ -22,10 +23,7 @@ const ScrollToTop = () => {
     return (
         <div className="scroll--container">
             {showTopBtn && (
-                <button
-                    className="scroll--container__btn"
-                    onClick={gotoTop}
-                >
+                <button className="btn btn-primary scroll--container__btn" onClick={gotoTop}>
                     Scroll Top
                 </button>
             )}

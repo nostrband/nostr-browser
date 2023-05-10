@@ -6,16 +6,12 @@
 .App {
   padding: 20px;
   min-height: 100vh;
+  position: relative;
+  padding-top: 76px;
 }
 
 .main--button {
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-  font-size: 12px;
-  border: none;
-  background-color: transparent;
-  color: rgb(76 63 61);
-  font-weight: bold;
-  margin-bottom: 15px;
+  position:absolute;
+  left:20px;
+  top:20px;
 }

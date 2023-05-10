@@ -8,8 +8,8 @@ export const MessageKind6 = ({message}) => {
     const eventId = message.tags.map((item) => item[0] === 'e' ? item[1] : '')[0];
 
     return (
-        <div className="MessageKind1Div">
+        <p className="card-text">
             Event <NostrBandLink postfix={Nostr.encodeEventId(eventId)} value={eventId}/>
-        </div>
+        </p>
     );
 }

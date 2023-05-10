@@ -1,9 +1,5 @@
 @import '../../variables.scss';
 
-.MessageKind1Div {
-  margin: 10px;
-}
-
 .MessageKind0Table {
   width: 100%;
   margin: 0px;
@@ -26,15 +22,4 @@
 
 .MessageKind0Table tr td:first-child {
   max-width: 50px;
-}
-
-.title {
-  margin: 10px 40px;
-}
-
-.listItem {
-  font-size: 1.1rem;
-}
-.message--footer {
-  margin: 10px;
 }

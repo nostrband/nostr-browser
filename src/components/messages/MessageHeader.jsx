@@ -12,10 +12,9 @@ export const MessageHeader = ({message}) => {
 
     return (
         <> {message && (
-            <div><p
-                className="messageHeader">Kind: {message.kind} CreatedAt: {formatDate(message.created_at)} ({message.created_at})
+            <p className="card-header">Kind: {message.kind} CreatedAt: {formatDate(message.created_at)} ({message.created_at})
                 Author: <NostrBandLink postfix={Nostr.encodeAuthorPubKey(message.pubkey)} value={message.pubkey}/></p>
-            </div>
+
         )}
         </>
     );

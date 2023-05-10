@@ -13,16 +13,6 @@
   transition: 0.5s;
   pointer-events: none;
   z-index: 4;
-
-  &__content {
-    border-radius: 25px;
-    transform: scale(0.5);
-    transition: 0.5s;
-  }
-
-  &__content.active {
-    transform: scale(1);
-  }
 }
 
 .modal.active {

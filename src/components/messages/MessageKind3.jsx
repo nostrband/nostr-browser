@@ -3,6 +3,6 @@ import './Messages.scss';
 
 export const MessageKind3 = ({}) => {
     return (
-        <div></div>
+        <p className="card-text"></p>
     );
 };

@@ -13,7 +13,7 @@ import { Tabs } from './components/Tabs/Tabs';
 import { Relay } from './components/Relay';
 import Nostr from './Nostr';
 import ScrolltoTop from './components/ScrolltoTop';
-import { getRandomInt } from './utils/helpers';
+import { changeRelayName, getRandomInt } from './utils/helpers';
 import { FilterModal } from './components/FilterModal.jsx';
 import UpdateFilterForm from './components/UpdateFilterForm.jsx';
 
@@ -59,7 +59,7 @@ function App() {
     data.relay = (
       <Relay
         ind={elementIndex}
-        url={data.url}
+        url={changeRelayName(data.url)}
         changeFilter={changeFilter}
         unsubscribe={unsubscribe}
         changeLinkSub={changeLinkSub}
@@ -77,15 +77,15 @@ function App() {
   };
 
   const connectToRelay = (data, callback) => {
-    Nostr.addRelay(data, callback);
-    Nostr.connectRelay(data);
+    Nostr.addRelay(changeRelayName(data), callback);
+    Nostr.connectRelay(changeRelayName(data));
   };
 
   const addTab = (data) => {
-    if (Nostr.relays.has(data.url)) {
+    if (Nostr.relays.has(changeRelayName(data.url))) {
       isConnectedSuccess(data);
     } else {
-      connectToRelay(data.url, () => isConnectedSuccess(data));
+      connectToRelay(changeRelayName(data.url), () => isConnectedSuccess(data));
     }
   };
 
@@ -96,33 +96,29 @@ function App() {
   };
 
   const unsubscribe = (value) => {
-    console.log(value);
     const item = tabs.find((item) => item.index === value);
     linkSub[value].unsub();
 
     const unSubKey = getUnSubKey(value);
-    Nostr.subscriptions.get(item.url).delete(unSubKey);
+    const relay = changeRelayName(item.url);
+    Nostr.subscriptions.get(relay).delete(unSubKey);
   };
 
   const closeTab = (value) => {
-    console.log(value);
     const index = tabs.findIndex((item) => item.index === value);
-    console.log(value);
+
     if (filter[value]) {
-      console.log(filter[value]);
-      console.log('filter[value]');
       unsubscribe(value);
     }
 
     const keys = Object.keys(filter);
-    console.log(keys);
     const newFilterKeys = keys.filter((key) => +key !== value);
     const newFilters = {};
-    console.log(newFilterKeys);
+
     newFilterKeys.forEach((key) => {
       newFilters[key] = filter[key];
     });
-    console.log(newFilters);
+
     if (value === active && index !== 0) {
       changeActiveTab(tabs[index - 1].index);
     }
@@ -130,9 +126,8 @@ function App() {
     if (value === active && index === 0 && tabs.length > 1) {
       changeActiveTab(tabs[index + 1].index);
     }
-    console.log(tabs);
+
     const changeTabs = tabs.filter((_, ind) => ind !== index);
-    console.log(changeTabs);
     setTabs(changeTabs);
     setFilter({ ...newFilters });
   };
@@ -170,7 +165,7 @@ function App() {
           newFilter.startsWith('{"kinds":[') ||
           (newFilter.startsWith('{"kinds": [') && newFilter.endsWith('}'))
         ) {
-          if (filter[ind] !== null) {
+          if (filter[ind] !== null && filter[ind] !== newFilter) {
             console.log('unsubscribe');
             unsubscribe(ind, item.url);
           }
@@ -182,9 +177,8 @@ function App() {
       }
       return item;
     });
-    //setTabs(ubiStateRef.current)
+
     setTabs([...updatedTabs]);
-    //setTabs([updatedTabs, ...]);
     filter[ind] = newFilter;
     setFilter({ ...filter });
   };

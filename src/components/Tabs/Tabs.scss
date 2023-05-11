@@ -45,12 +45,12 @@
   display: block;
 }
 
-.tabRelative{
+.tabRelative {
   position: relative;
 }
 
 .pills-headers li:not(:first-child) {
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 .pills-headers button {
@@ -58,7 +58,7 @@
 }
 
 .pills-contents .tab-pane:not(:first-child) {
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 .closeIcon {
@@ -75,7 +75,7 @@
 }
 
 .changeStyle--button {
-  position:absolute;
-  right:20px;
-  top:20px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
 }

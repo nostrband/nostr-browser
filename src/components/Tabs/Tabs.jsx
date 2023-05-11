@@ -10,7 +10,7 @@ export const Tabs = ({
   tabs,
   openFilterModal,
 }) => {
-  const [tabsView, setTabsView] = useState(true);
+  const [tabsView, setTabsView] = useState(false);
   const openTab = (event) => changeActiveTab(+event.target.dataset.index);
 
   const toTableView = () => setTabsView(false);
@@ -26,7 +26,7 @@ export const Tabs = ({
     openFilterModal(index);
   };
   const widthTab = () => {
-    return Math.floor((100 - 5) / tabs.length);
+    return Math.floor(100 / tabs.length);
   };
 
   return (
@@ -103,18 +103,18 @@ export const Tabs = ({
           ) : (
             <div>
               <ul
-                className="nav nav-pills nav-fill mb-3"
+                className="nav nav-pills nav-fill mb-3 pills-headers"
                 id="pills-tab"
                 role="tablist"
               >
                 {tabs.map((item) => (
                   <li
-                    className="nav-item tabRelative"
+                    className="nav-item tabRelative border border-primary rounded"
                     role="presentation"
                     key={item.url + item.index}
+                    style={{ maxWidth: `calc(${widthTab()}% - 10px)`}}
                   >
                     <button
-                      // onClick={openTab}
                       data-index={item.index}
                       className={`nav-link tabPil`}
                       id="profile-tab"
@@ -143,17 +143,17 @@ export const Tabs = ({
                 ))}
               </ul>
               <div
-                className="tab-content d-flex row-gap-10"
+                className="tab-content d-flex row-gap-10 pills-contents"
                 id="pills-tabContent"
               >
                 {tabs.map((item) => (
                   <div
                     key={item.url + item.index}
-                    className={`tab-pane fade show active me-5`}
+                    className={`tab-pane fade show active`}
                     id="home"
                     role="tabpanel"
                     aria-labelledby="pills-home-tab"
-                    style={{ width: `${widthTab()}%` }}
+                    style={{ width: `calc(${widthTab()}% - 10px)`}}
                   >
                     {item.relay}
                   </div>

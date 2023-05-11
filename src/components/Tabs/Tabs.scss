@@ -49,6 +49,18 @@
   position: relative;
 }
 
+.pills-headers li:not(:first-child) {
+  margin-left: 20px;
+}
+
+.pills-headers button {
+  padding: 0px;
+}
+
+.pills-contents .tab-pane:not(:first-child) {
+  margin-left: 20px;
+}
+
 .closeIcon {
   position: absolute;
   top: 0;

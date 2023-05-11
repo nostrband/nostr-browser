@@ -1,55 +1,16 @@
-/*$color:  rgba(19, 35, 47, 0.9);
-$color-label: #ffffff;
-$border-radius: 5px;
-$font-family: 'Titillium Web', sans-serif;
-$font-size: 25px;
-$margin-top: 20px;
-$color-background: #1ab188;
-$width: 100%; 
-#root {
-  text-align: center;
+.App {
+  padding: 20px;
+  min-height: 100vh;
+  position: relative;
 }
 
-.main--button {
-  display: flex;
-  margin-left: 10px;
-  justify-content: center;
-  border: none;
-  outline: none;
-  border-radius: 50px;
-  padding: 15px 0;
-  font-size: 25px;
-  font-weight: 600;
-  text-transform: uppercase;
-  width: 200px;
-  background: $color-background;
-  color:$color-label;
-  margin-top: $margin-top;
-  cursor: pointer;
+@mixin make-container($padding-x: $container-padding-x) {
+  width: calc(100vw - 40px);
+  box-sizing: border-box;
+  padding-right: $padding-x;
+  padding-bottom: 40px;
 }
-.main--button:hover {
-  background: #057658;
-}
-*/
-.app--image {
-  width: 50px;
-  height: 50px;
-}
-.App {
-  display: flex;
-  flex-direction: row;
-}
-.App--buttons {
-  display: flex;
-  flex-direction: column;
-}
-.main--button {
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-  font-size: 11px;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  color: white;
+
+.custom-container {
+  @include make-container(60px);
 }

@@ -1,37 +1,166 @@
-import { useState } from 'react';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import './Tabs.scss';
-import { Relay } from '../Relay';
+import React, { useState } from 'react';
 
-export const Tabs = ({ data }) => {
-  const [active, setActive] = useState(0);
+export const Tabs = ({
+  active,
+  changeActiveTab,
+  closeTab,
+  tabs,
+  openFilterModal,
+}) => {
+  const [tabsView, setTabsView] = useState(true);
+  const openTab = (event) => changeActiveTab(+event.target.dataset.index);
 
-  const openTab = (event) => setActive(+event.target.dataset.index);
+  const toTableView = () => setTabsView(false);
+  const toTabsView = () => setTabsView(true);
+
+  const close = (event, index) => {
+    event.stopPropagation();
+    closeTab(index);
+  };
+
+  const openFilter = (event, index) => {
+    event.stopPropagation();
+    openFilterModal(index);
+  };
+  const widthTab = () => {
+    return Math.floor(100 / tabs.length);
+  };
 
   return (
     <>
-      {data.length > 0 && (
-        <div>
-          <div className="tab">
-            {data.map((item, index) => (
-              <button
-                className={`tablinks ${index === active ? 'active' : ''}`}
-                onClick={openTab}
-                data-index={index}
-                key={item.url + index}
-              >
-                {item.url}
-              </button>
-            ))}
-          </div>
-          {data.map((_item, index) => (
-            <div
-              className={`tabcontent ${index === active ? 'active' : ''}`}
-              key={index}
-            >
-              <Relay />
+      {tabs.length > 0 && (
+        <div className="tab--mainContainer">
+          <button className="btn btn-primary changeStyle--button">
+            {tabsView ? (
+              <i
+                onClick={toTableView}
+                className="bi bi-layout-three-columns"
+              ></i>
+            ) : (
+              <i onClick={toTabsView} className="bi bi-layout-wtf"></i>
+            )}
+          </button>
+
+          {tabsView ? (
+            <div>
+              <ul className="nav nav-tabs mb-3" id="pills-tab" role="tablist">
+                {tabs.map((item) => (
+                  <li
+                    className="nav-item tabRelative"
+                    role="presentation"
+                    key={item.url + item.index}
+                  >
+                    <button
+                      onClick={openTab}
+                      data-index={item.index}
+                      className={`nav-link ${
+                        item.index === active ? 'active' : ''
+                      } tabPil`}
+                      id="profile-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#pills-home"
+                      type="button"
+                      role="tab"
+                      aria-controls="pills-home"
+                      aria-selected="true"
+                    >
+                      <span
+                        className="bi bi-filter filterIcon"
+                        onClick={(event) => openFilter(event, item.index)}
+                      ></span>
+                      {item.url} <br />
+                      {item.filter === null ? null : item.filter}
+                      <span
+                        className="closeIcon"
+                        aria-hidden="true"
+                        onClick={(event) => close(event, item.index)}
+                      >
+                        &times;
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <div className="tab-content" id="pills-tabContent">
+                {tabs.map((item) => (
+                  <div
+                    key={item.url + item.index}
+                    className={`tab-pane fade show ${
+                      item.index === active ? 'active' : ''
+                    }`}
+                    id="home"
+                    role="tabpanel"
+                    aria-labelledby="pills-home-tab"
+                  >
+                    {item.relay}
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
+          ) : (
+            <div>
+              <ul
+                className="nav nav-pills nav-fill mb-3 pills-headers"
+                id="pills-tab"
+                role="tablist"
+              >
+                {tabs.map((item) => (
+                  <li
+                    className="nav-item tabRelative border border-primary rounded"
+                    role="presentation"
+                    key={item.url + item.index}
+                    style={{ maxWidth: `calc(${widthTab()}% - 10px)`}}
+                  >
+                    <button
+                      data-index={item.index}
+                      className={`nav-link tabPil`}
+                      id="profile-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#pills-home"
+                      type="button"
+                      role="tab"
+                      aria-controls="pills-home"
+                      aria-selected="true"
+                    >
+                      <span
+                        className="bi bi-filter filterIcon"
+                        onClick={(event) => openFilter(event, item.index)}
+                      ></span>
+                      {item.url} <br />
+                      {item.filter === null ? null : item.filter}
+                      <span
+                        className="closeIcon"
+                        aria-hidden="true"
+                        onClick={(event) => close(event, item.index)}
+                      >
+                        &times;
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <div
+                className="tab-content d-flex row-gap-10 pills-contents"
+                id="pills-tabContent"
+              >
+                {tabs.map((item) => (
+                  <div
+                    key={item.url + item.index}
+                    className={`tab-pane fade show active`}
+                    id="home"
+                    role="tabpanel"
+                    aria-labelledby="pills-home-tab"
+                    style={{ width: `calc(${widthTab()}% - 10px)`}}
+                  >
+                    {item.relay}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </>

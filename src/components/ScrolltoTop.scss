@@ -1,0 +1,12 @@
+@import '../variables.scss';
+
+.scroll--container {
+  position: relative;
+}
+
+.scroll--container__btn {
+  position: fixed;
+  bottom: 30px;
+  right: 25px;
+  z-index: 20;
+}

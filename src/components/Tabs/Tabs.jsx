@@ -10,7 +10,7 @@ export const Tabs = ({
   tabs,
   openFilterModal,
 }) => {
-  const [tabsView, setTabsView] = useState(false);
+  const [tabsView, setTabsView] = useState(true);
   const openTab = (event) => changeActiveTab(+event.target.dataset.index);
 
   const toTableView = () => setTabsView(false);

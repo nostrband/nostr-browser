@@ -25,6 +25,9 @@ export const Tabs = ({
     event.stopPropagation();
     openFilterModal(index);
   };
+  const widthTab = () => {
+    return Math.floor(100 / tabs.length);
+  };
 
   return (
     <>
@@ -100,22 +103,20 @@ export const Tabs = ({
           ) : (
             <div>
               <ul
-                className="nav nav-pills nav-fill mb-3"
+                className="nav nav-pills nav-fill mb-3 pills-headers"
                 id="pills-tab"
                 role="tablist"
               >
                 {tabs.map((item) => (
                   <li
-                    className="nav-item tabRelative"
+                    className="nav-item tabRelative border border-primary rounded"
                     role="presentation"
                     key={item.url + item.index}
+                    style={{ maxWidth: `calc(${widthTab()}% - 10px)`}}
                   >
                     <button
-                      onClick={openTab}
                       data-index={item.index}
-                      className={`nav-link ${
-                        item.index === active ? 'active' : ''
-                      } tabPil`}
+                      className={`nav-link tabPil`}
                       id="profile-tab"
                       data-bs-toggle="tab"
                       data-bs-target="#pills-home"
@@ -129,9 +130,7 @@ export const Tabs = ({
                         onClick={(event) => openFilter(event, item.index)}
                       ></span>
                       {item.url} <br />
-                      {item.filter === null
-                        ? null
-                        : JSON.stringify(item.filter)}
+                      {item.filter === null ? null : item.filter}
                       <span
                         className="closeIcon"
                         aria-hidden="true"
@@ -143,16 +142,18 @@ export const Tabs = ({
                   </li>
                 ))}
               </ul>
-              <div className="tab-content" id="pills-tabContent">
+              <div
+                className="tab-content d-flex row-gap-10 pills-contents"
+                id="pills-tabContent"
+              >
                 {tabs.map((item) => (
                   <div
                     key={item.url + item.index}
-                    className={`tab-pane fade show ${
-                      item.index === active ? 'active' : ''
-                    }`}
+                    className={`tab-pane fade show active`}
                     id="home"
                     role="tabpanel"
                     aria-labelledby="pills-home-tab"
+                    style={{ width: `calc(${widthTab()}% - 10px)`}}
                   >
                     {item.relay}
                   </div>

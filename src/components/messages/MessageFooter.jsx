@@ -13,10 +13,7 @@ export const MessageFooter = ({ tags }) => {
             <thead></thead>
             <tbody>
               {tags.map((tag, index) => (
-                <tr
-                  key={index + 'tagUniqueIndex'}
-                  style={{ wordBreak: 'break-word' }}
-                >
+                <tr className="text-break" key={index + 'tagUniqueIndex'}>
                   {tag.map((item, index) => {
                     if (index === 1 && tag[0] === 'p') {
                       return (

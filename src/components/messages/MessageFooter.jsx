@@ -36,7 +36,7 @@ export const MessageFooter = ({ tags }) => {
                       );
                     }
                     return (
-                      <td key={index + 'itemUniqueIndex'}>{item + 'dfd'}</td>
+                      <td key={index + 'itemUniqueIndex'}>{item}</td>
                     );
                   })}
                 </tr>

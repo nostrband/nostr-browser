@@ -2,6 +2,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import './Tabs.scss';
 import React, { useState } from 'react';
+import { changeRelayName } from '../../utils/helpers';
 
 export const Tabs = ({
   active,
@@ -13,8 +14,7 @@ export const Tabs = ({
   const [tabsView, setTabsView] = useState(true);
   const openTab = (event) => changeActiveTab(+event.target.dataset.index);
 
-  const toTableView = () => setTabsView(false);
-  const toTabsView = () => setTabsView(true);
+  const toggleTableView = () => setTabsView(!tabsView);
 
   const close = (event, index) => {
     event.stopPropagation();
@@ -25,22 +25,23 @@ export const Tabs = ({
     event.stopPropagation();
     openFilterModal(index);
   };
-  const widthTab = () => {
-    return Math.floor(100 / tabs.length);
+
+  const getPaddingWidth = () => {
+    return (tabs.length - 1) * 10;
   };
 
   return (
     <>
       {tabs.length > 0 && (
         <div className="tab--mainContainer">
-          <button className="btn btn-primary changeStyle--button">
+          <button
+            className="btn btn-primary changeStyle--button"
+            onClick={toggleTableView}
+          >
             {tabsView ? (
-              <i
-                onClick={toTableView}
-                className="bi bi-layout-three-columns"
-              ></i>
+              <i className="bi bi-layout-three-columns"></i>
             ) : (
-              <i onClick={toTabsView} className="bi bi-layout-wtf"></i>
+              <i className="bi bi-layout-wtf"></i>
             )}
           </button>
 
@@ -51,7 +52,7 @@ export const Tabs = ({
                   <li
                     className="nav-item tabRelative"
                     role="presentation"
-                    key={item.url + item.index}
+                    key={changeRelayName(item.url) + item.index}
                   >
                     <button
                       onClick={openTab}
@@ -71,7 +72,7 @@ export const Tabs = ({
                         className="bi bi-filter filterIcon"
                         onClick={(event) => openFilter(event, item.index)}
                       ></span>
-                      {item.url} <br />
+                      {changeRelayName(item.url)} <br />
                       {item.filter === null ? null : item.filter}
                       <span
                         className="closeIcon"
@@ -87,7 +88,7 @@ export const Tabs = ({
               <div className="tab-content" id="pills-tabContent">
                 {tabs.map((item) => (
                   <div
-                    key={item.url + item.index}
+                    key={changeRelayName(item.url) + item.index}
                     className={`tab-pane fade show ${
                       item.index === active ? 'active' : ''
                     }`}
@@ -103,7 +104,7 @@ export const Tabs = ({
           ) : (
             <div>
               <ul
-                className="nav nav-pills nav-fill mb-3 pills-headers"
+                className="nav nav-pills nav-justified mb-3 pills-headers d-flex flex-nowrap"
                 id="pills-tab"
                 role="tablist"
               >
@@ -111,8 +112,7 @@ export const Tabs = ({
                   <li
                     className="nav-item tabRelative border border-primary rounded"
                     role="presentation"
-                    key={item.url + item.index}
-                    style={{ maxWidth: `calc(${widthTab()}% - 10px)`}}
+                    key={changeRelayName(item.url) + item.index}
                   >
                     <button
                       data-index={item.index}
@@ -129,7 +129,7 @@ export const Tabs = ({
                         className="bi bi-filter filterIcon"
                         onClick={(event) => openFilter(event, item.index)}
                       ></span>
-                      {item.url} <br />
+                      {changeRelayName(item.url)} <br />
                       {item.filter === null ? null : item.filter}
                       <span
                         className="closeIcon"
@@ -143,7 +143,7 @@ export const Tabs = ({
                 ))}
               </ul>
               <div
-                className="tab-content d-flex row-gap-10 pills-contents"
+                className="tab-content d-flex  pills-contents"
                 id="pills-tabContent"
               >
                 {tabs.map((item) => (
@@ -153,7 +153,11 @@ export const Tabs = ({
                     id="home"
                     role="tabpanel"
                     aria-labelledby="pills-home-tab"
-                    style={{ width: `calc(${widthTab()}% - 10px)`}}
+                    style={{
+                      width: `calc((100% - ${getPaddingWidth()}px)/ ${
+                        tabs.length
+                      })`,
+                    }}
                   >
                     {item.relay}
                   </div>

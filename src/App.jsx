@@ -82,10 +82,11 @@ function App() {
   };
 
   const addTab = (data) => {
-    if (Nostr.relays.has(changeRelayName(data.url))) {
+    data.url = changeRelayName(data.url);
+    if (Nostr.relays.has(data.url)) {
       isConnectedSuccess(data);
     } else {
-      connectToRelay(changeRelayName(data.url), () => isConnectedSuccess(data));
+      connectToRelay(data.url, () => isConnectedSuccess(data));
     }
   };
 

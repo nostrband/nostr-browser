@@ -1,13 +1,11 @@
-import Dropdown from 'react-dropdown';
 import 'websocket-polyfill';
-import { toast } from 'react-toastify';
 import { useEffect, useRef, useState } from 'react';
 
 import './Relay.scss';
 import '../variables.scss';
 import Nostr from '../Nostr';
 import { Messages } from './messages/Messages.jsx';
-import {options, optionsObj} from '../utils/options';
+import { changeRelayName } from '../utils/helpers';
 
 export const Relay = ({
   url,
@@ -16,7 +14,7 @@ export const Relay = ({
   filter,
   unsubscribe,
   changeLinkSub,
-  filterVal
+  filterVal,
 }) => {
   const [messages, setMessages] = useState([]);
 
@@ -24,16 +22,20 @@ export const Relay = ({
 
   useEffect(() => {
     if (ind === 0) {
-      connectToRelay(url, () => {});
-      const sub = subscribeToRelay(url, [JSON.parse(filterVal)]);
+      connectToRelay(changeRelayName(url), () => {});
+      const sub = subscribeToRelay(changeRelayName(url), [
+        JSON.parse(filterVal),
+      ]);
       changeLinkSub(sub, ind);
     }
-    if(ind !== 0 && filterVal && filterVal !== ''){
-      connectToRelay(url, () => {});
-      const sub = subscribeToRelay(url, [JSON.parse(filterVal)]);
+    if (ind !== 0 && filterVal && filterVal !== '') {
+      connectToRelay(changeRelayName(url), () => {});
+      const sub = subscribeToRelay(changeRelayName(url), [
+        JSON.parse(filterVal),
+      ]);
       changeLinkSub(sub, ind);
     }
-    setMessages([])
+    setMessages([]);
   }, [filterVal]);
 
   useEffect(() => {
@@ -45,12 +47,14 @@ export const Relay = ({
   };
 
   const connectToRelay = (data, callback) => {
-    Nostr.addRelay(data, callback);
-    Nostr.connectRelay(data);
+    Nostr.addRelay(changeRelayName(data), callback);
+    Nostr.connectRelay(changeRelayName(data));
   };
 
   const subscribeToRelay = (relayUrl, filter) => {
-    return Nostr.subscribe(relayUrl, filter, (data) => addMessage(data));
+    return Nostr.subscribe(changeRelayName(relayUrl), filter, (data) =>
+      addMessage(data),
+    );
   };
 
   return (

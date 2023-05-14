@@ -6,6 +6,7 @@ import '../variables.scss';
 import Nostr from '../Nostr';
 import { Messages } from './messages/Messages.jsx';
 import { changeRelayName } from '../utils/helpers';
+import { cash, pubKeys } from '../utils/options';
 
 export const Relay = ({
   url,
@@ -40,10 +41,39 @@ export const Relay = ({
 
   useEffect(() => {
     ubiStateRef.current = messages;
+
+    if (!pubKeys[url]) {
+      pubKeys[url] = [];
+    }
+
+    if (pubKeys[url].length >= 5) {
+      subscribeToKind(changeRelayName(url), [
+        {
+          kinds: [0],
+          authors: [...pubKeys[url]],
+        },
+      ]);
+      pubKeys[url].length = 0;
+    }
   }, [messages]);
 
-  const addMessage = (data) => {
+  const addMessage = (data, relayUrl) => {
     setMessages([data, ...ubiStateRef.current]);
+    const cashData = cash.get(relayUrl);
+
+    if (cashData) {
+      if (
+        data.kind !== 0 &&
+        !cash.get(relayUrl).get(data.pubkey) &&
+        !pubKeys[relayUrl].includes(data.pubkey)
+      ) {
+        pubKeys[relayUrl].push(data.pubkey);
+      }
+    } else {
+      if (data.kind !== 0 && !pubKeys[relayUrl].includes(data.pubkey)) {
+        pubKeys[relayUrl].push(data.pubkey);
+      }
+    }
   };
 
   const connectToRelay = (data, callback) => {
@@ -53,8 +83,28 @@ export const Relay = ({
 
   const subscribeToRelay = (relayUrl, filter) => {
     return Nostr.subscribe(changeRelayName(relayUrl), filter, (data) =>
-      addMessage(data),
+      addMessage(data, changeRelayName(relayUrl)),
     );
+  };
+
+  const saveDataAuthors = (data, relayUrl) => {
+    const cashByUrl = cash.get(relayUrl);
+
+    if (cashByUrl) {
+      if (cashByUrl.size >= 1000) {
+        cashByUrl.clear();
+      }
+      cashByUrl.set(data.pubkey, data.content);
+    } else {
+      let authorData = new Map();
+      authorData.set(data.pubkey, data.content);
+      cash.set(relayUrl, authorData);
+    }
+  };
+
+  const subscribeToKind = (relayUrl, filter) => {
+    const url = changeRelayName(relayUrl);
+    return Nostr.getAuthors(url, filter, (data) => saveDataAuthors(data, url));
   };
 
   return (

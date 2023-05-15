@@ -4,7 +4,6 @@ import './Tabs.scss';
 import React, { useState } from 'react';
 import { changeRelayName } from '../../utils/helpers';
 import {Relay} from "../Relay.jsx";
-import {options} from "../../utils/options.js";
 
 export const Tabs = ({
   active,
@@ -16,14 +15,15 @@ export const Tabs = ({
   showProfiles
 }) => {
   const [tabsView, setTabsView] = useState(true);
-  const openTab = (event) => changeActiveTab(+event.target.dataset.index);
 
-  const toggleTableView = () => setTabsView(!tabsView);
+  const openTab = (event) => changeActiveTab(+event.target.dataset.index);
 
   const close = (event, index) => {
     event.stopPropagation();
     closeTab(index);
   };
+
+  const toggleTableView = () => setTabsView(!tabsView);
 
   const openFilter = (event, index) => {
     event.stopPropagation();

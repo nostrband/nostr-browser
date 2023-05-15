@@ -12,7 +12,7 @@ export function changeRelayName(relay) {
 
   if (relay.startsWith('ws://')) {
     changeRelay = relay.slice(5, relay.length);
-    return;
+    return changeRelay;
   }
 
   changeRelay = relay;

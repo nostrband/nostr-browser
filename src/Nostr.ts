@@ -97,7 +97,6 @@ const Nostr = {
 
     sub.on('event', (event: Event) => {
       callback(event);
-      console.log(cash);
     });
 
     sub.on('eose', () => {

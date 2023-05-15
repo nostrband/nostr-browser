@@ -7,7 +7,7 @@ import {MessageKind7} from "./MessageKind7.jsx";
 import {MessageFooter} from './MessageFooter.jsx';
 import {MessageHeader} from "./MessageHeader.jsx";
 
-export const Messages = ({message}) => {
+export const Messages = ({message, showProfiles}) => {
     const messagesMap = {
         0: <MessageKind0 message={message}/>,
         1: <MessageKind1 message={message}/>,
@@ -18,7 +18,7 @@ export const Messages = ({message}) => {
 
     return (
         <div className="card">
-            <MessageHeader message={message}/>
+            <MessageHeader message={message} showProfiles={showProfiles}/>
             <div className="card-body">
                 {messagesMap[message.kind] ? (
                     messagesMap[message.kind]

@@ -1,5 +1,6 @@
 import { Relay, relayInit, Sub, nip19 } from 'nostr-tools';
 import { toast } from 'react-toastify';
+import { cash } from './utils/options';
 
 const DEFAULT_RELAYS = [];
 const URL_PREFIX = 'wss://';
@@ -90,6 +91,25 @@ const Nostr = {
     return sub;
   },
 
+  getAuthors(url: string, filter: [], callback) {
+    let relay = this.relays.get(url);
+    if (!relay){
+      relay = relayInit(URL_PREFIX + url);
+    }
+
+    const sub = relay.sub(filter);
+
+    sub.on('event', (event: Event) => {
+      callback(event);
+    });
+
+    sub.on('eose', () => {
+      sub.unsub();
+    });
+
+    return sub;
+  },
+
   connectRelay: function (url: string) {
     let relay = this.relays.get(url);
     if (!relay) return;
@@ -106,13 +126,13 @@ const Nostr = {
     return JSON.stringify(obj);
   },
 
-  encodeEventId(eventId: string){
+  encodeEventId(eventId: string) {
     return nip19.noteEncode(eventId);
   },
 
-  encodeAuthorPubKey(pubkey: string){
+  encodeAuthorPubKey(pubkey: string) {
     return nip19.npubEncode(pubkey);
-  }
+  },
 };
 
 export default Nostr;

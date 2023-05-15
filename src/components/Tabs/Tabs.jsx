@@ -3,8 +3,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './Tabs.scss';
 import React, { useState } from 'react';
 import { changeRelayName } from '../../utils/helpers';
-import {Relay} from "../Relay.jsx";
-import {options} from "../../utils/options.js";
+import { Relay } from '../Relay.jsx';
 
 export const Tabs = ({
   active,
@@ -13,7 +12,7 @@ export const Tabs = ({
   tabs,
   openFilterModal,
   changeLinkSub,
-  showProfiles
+  showProfiles,
 }) => {
   const [tabsView, setTabsView] = useState(true);
   const openTab = (event) => changeActiveTab(+event.target.dataset.index);
@@ -101,11 +100,11 @@ export const Tabs = ({
                     aria-labelledby="pills-home-tab"
                   >
                     <Relay
-                        ind={item.index}
-                        url={item.url}
-                        changeLinkSub={changeLinkSub}
-                        filterVal={item.filter}
-                        showProfiles={showProfiles}
+                      ind={item.index}
+                      url={item.url}
+                      changeLinkSub={changeLinkSub}
+                      filterVal={item.filter}
+                      showProfiles={showProfiles}
                     />
                   </div>
                 ))}
@@ -170,11 +169,11 @@ export const Tabs = ({
                     }}
                   >
                     <Relay
-                        ind={item.index}
-                        url={item.url}
-                        changeLinkSub={changeLinkSub}
-                        filterVal={item.filter}
-                        showProfiles={showProfiles}
+                      ind={item.index}
+                      url={item.url}
+                      changeLinkSub={changeLinkSub}
+                      filterVal={item.filter}
+                      showProfiles={showProfiles}
                     />
                   </div>
                 ))}

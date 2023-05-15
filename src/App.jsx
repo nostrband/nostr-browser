@@ -10,7 +10,6 @@ import './variables.scss';
 import { Modal } from './components/Modal.jsx';
 import GetForm from './components/Form.jsx';
 import { Tabs } from './components/Tabs/Tabs';
-import { Relay } from './components/Relay';
 import Nostr from './Nostr';
 import ScrolltoTop from './components/ScrolltoTop';
 import { changeRelayName, getRandomInt } from './utils/helpers';
@@ -27,9 +26,9 @@ function App() {
   const [showProfiles, setShowProfiles] = useState(false);
 
   const toggleShowProfile = () => {
-   const newDhowProfiles = !showProfiles;
+    const newDhowProfiles = !showProfiles;
     setShowProfiles(newDhowProfiles);
-  }
+  };
 
   const updateFilter1 = (data, ind) => {
     const newFilter = data.filterSelect ? data.filterSelect : data.filterInput;
@@ -170,7 +169,7 @@ function App() {
       url: 'relay.nostr.band',
       index: 0,
       filter: options[3],
-    }
+    },
   ]);
 
   const ubiStateRef = useRef();
@@ -204,7 +203,13 @@ function App() {
           )}
         </button>
         <div className="form-check showProfile--checkbox">
-          <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" onClick={toggleShowProfile}></input>
+          <input
+            className="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckDefault"
+            onClick={toggleShowProfile}
+          ></input>
           <label className="form-check-label" htmlFor="flexCheckDefault">
             Show profiles
           </label>

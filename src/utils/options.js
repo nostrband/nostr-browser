@@ -18,7 +18,7 @@ export const optionsObj = {
   6: '{"kinds": [6], "limit": 1}',
 };
 
-export const pubKeys = {};
+// export const pubKeys = {};
+export const pubKeys = [];
 
-// export const cash = {};
 export const cash = new Map();

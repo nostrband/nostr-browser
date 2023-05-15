@@ -8,13 +8,7 @@ import { Messages } from './messages/Messages.jsx';
 import { changeRelayName } from '../utils/helpers';
 import { cash, pubKeys } from '../utils/options';
 
-export const Relay = ({
-  url,
-  ind,
-  changeLinkSub,
-  filterVal,
-  showProfiles
-}) => {
+export const Relay = ({ url, ind, changeLinkSub, filterVal, showProfiles }) => {
   const [messages, setMessages] = useState([]);
 
   const ubiStateRef = useRef();
@@ -40,37 +34,26 @@ export const Relay = ({
   useEffect(() => {
     ubiStateRef.current = messages;
 
-    if (!pubKeys[url]) {
-      pubKeys[url] = [];
-    }
-
-    if (pubKeys[url].length >= 5) {
-      subscribeToKind(changeRelayName(url), [
+    if (pubKeys.length >= 5) {
+      subscribeToKind('relay.nostr.band', [
         {
           kinds: [0],
-          authors: [...pubKeys[url]],
+          authors: [...pubKeys],
         },
       ]);
-      pubKeys[url].length = 0;
+      pubKeys.length = 0;
     }
   }, [messages]);
 
-  const addMessage = (data, relayUrl) => {
+  const addMessage = (data) => {
     setMessages([data, ...ubiStateRef.current]);
-    const cashData = cash.get(relayUrl);
 
-    if (cashData) {
-      if (
-        data.kind !== 0 &&
-        !cash.get(relayUrl).get(data.pubkey) &&
-        !pubKeys[relayUrl].includes(data.pubkey)
-      ) {
-        pubKeys[relayUrl].push(data.pubkey);
-      }
-    } else {
-      if (data.kind !== 0 && !pubKeys[relayUrl].includes(data.pubkey)) {
-        pubKeys[relayUrl].push(data.pubkey);
-      }
+    if (
+      data.kind !== 0 &&
+      !cash.get(data.pubkey) &&
+      !pubKeys.includes(data.pubkey)
+    ) {
+      pubKeys.push(data.pubkey);
     }
   };
 
@@ -85,24 +68,25 @@ export const Relay = ({
     );
   };
 
-  const saveDataAuthors = (data, relayUrl) => {
-    const cashByUrl = cash.get(relayUrl);
+  const saveDataAuthors = (data) => {
+    const { pubkey, content } = data;
+    const cashByPubkey = cash.get(pubkey);
 
-    if (cashByUrl) {
-      if (cashByUrl.size >= 1000) {
-        cashByUrl.clear();
+    if (!cashByPubkey) {
+      if (cash.size >= 1000) {
+        const keys = [...cash.keys()];
+        const keysForDelete = keys.splice(0, 20);
+
+        keysForDelete.forEach((item) => {
+          cash.delete(item);
+        });
       }
-      cashByUrl.set(data.pubkey, data.content);
-    } else {
-      let authorData = new Map();
-      authorData.set(data.pubkey, data.content);
-      cash.set(relayUrl, authorData);
+      cash.set(pubkey, content);
     }
   };
 
   const subscribeToKind = (relayUrl, filter) => {
-    const url = changeRelayName(relayUrl);
-    return Nostr.getAuthors(url, filter, (data) => saveDataAuthors(data, url));
+    return Nostr.getAuthors(relayUrl, filter, (data) => saveDataAuthors(data));
   };
 
   return (
@@ -111,7 +95,7 @@ export const Relay = ({
       <div id="messages" className="relay--container__messages">
         {messages.map((message) => (
           <div className="messages" key={ind + message.id + ind}>
-            <Messages message={message} showProfiles={showProfiles}/>
+            <Messages message={message} showProfiles={showProfiles} />
           </div>
         ))}
       </div>

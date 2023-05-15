@@ -24,6 +24,12 @@ function App() {
   const [active, setActive] = useState(0);
   const [linkSub, setLinkSub] = useState({});
   const [filterModelIndex, setFilterModelIndex] = useState(null);
+  const [showProfiles, setShowProfiles] = useState(false);
+
+  const toggleShowProfile = () => {
+   const newDhowProfiles = !showProfiles;
+    setShowProfiles(newDhowProfiles);
+  }
 
   const updateFilter1 = (data, ind) => {
     const newFilter = data.filterSelect ? data.filterSelect : data.filterInput;
@@ -55,19 +61,6 @@ function App() {
     const newFilter = data.filterSelect ? data.filterSelect : data.filterInput;
     filter[elementIndex] = newFilter;
     setFilter({ ...filter });
-
-    data.relay = (
-      <Relay
-        ind={elementIndex}
-        url={changeRelayName(data.url)}
-        changeFilter={changeFilter}
-        unsubscribe={unsubscribe}
-        changeLinkSub={changeLinkSub}
-        filter={filter}
-        filterVal={newFilter}
-      />
-    );
-
     data.index = elementIndex;
     data.filter = newFilter;
     tabs.push(data);
@@ -150,18 +143,6 @@ function App() {
     const updatedTabs = tabs.map((item) => {
       if (item.index === ind) {
         item.filter = newFilter;
-        item.relay = (
-          <Relay
-            ind={ind}
-            url={item.url}
-            changeFilter={changeFilter}
-            unsubscribe={unsubscribe}
-            changeLinkSub={changeLinkSub}
-            filter={filter}
-            filterVal={newFilter}
-          />
-        );
-
         if (
           newFilter.startsWith('{"kinds":[') ||
           (newFilter.startsWith('{"kinds": [') && newFilter.endsWith('}'))
@@ -187,20 +168,9 @@ function App() {
   const [tabs, setTabs] = useState([
     {
       url: 'relay.nostr.band',
-      relay: (
-        <Relay
-          ind={0}
-          url={'relay.nostr.band'}
-          filter={filter}
-          changeFilter={changeFilter}
-          unsubscribe={unsubscribe}
-          changeLinkSub={changeLinkSub}
-          filterVal={options[3]}
-        />
-      ),
       index: 0,
       filter: options[3],
-    },
+    }
   ]);
 
   const ubiStateRef = useRef();
@@ -233,6 +203,12 @@ function App() {
             <i className="bi bi-brightness-high" />
           )}
         </button>
+        <div className="form-check showProfile--checkbox">
+          <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" onClick={toggleShowProfile}></input>
+          <label className="form-check-label" htmlFor="flexCheckDefault">
+            Show profiles
+          </label>
+        </div>
       </div>
       <Tabs
         active={active}
@@ -242,6 +218,7 @@ function App() {
         changeLinkSub={changeLinkSub}
         tabs={tabs}
         openFilterModal={openFilterModal}
+        showProfiles={showProfiles}
       />
 
       {isOpen ? (

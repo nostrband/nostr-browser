@@ -11,11 +11,9 @@ import { cash, pubKeys } from '../utils/options';
 export const Relay = ({
   url,
   ind,
-  changeFilter,
-  filter,
-  unsubscribe,
   changeLinkSub,
   filterVal,
+  showProfiles
 }) => {
   const [messages, setMessages] = useState([]);
 
@@ -113,7 +111,7 @@ export const Relay = ({
       <div id="messages" className="relay--container__messages">
         {messages.map((message) => (
           <div className="messages" key={ind + message.id + ind}>
-            <Messages message={message} />
+            <Messages message={message} showProfiles={showProfiles}/>
           </div>
         ))}
       </div>

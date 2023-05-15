@@ -2,19 +2,21 @@ import React, {useEffect, useRef, useState} from 'react';
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {options} from './utils/options';
+import {defaultGetAuthorsRelayUrl, options} from './utils/options';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import './App.scss';
 import './variables.scss';
-import {Modal} from './components/Modal.jsx';
-import GetForm from './components/Form.jsx';
+import {AddTabModal} from './components/AddTabModal.jsx';
+import AddTabForm from './components/AddTabForm.jsx';
 import {Tabs} from './components/Tabs/Tabs';
 import Nostr from './Nostr';
 import ScrolltoTop from './components/ScrolltoTop';
 import {changeRelayName, getRandomInt} from './utils/helpers';
 import {FilterModal} from './components/FilterModal.jsx';
 import UpdateFilterForm from './components/UpdateFilterForm.jsx';
+import {SettingsModal} from "./components/SettingsModal";
+import SettingsForm from "./components/SettingsForm";
 
 const LIGHT = 'light';
 const DARK = 'dark';
@@ -23,12 +25,14 @@ const WRONG_DATA = 'Wrong data!';
 function App() {
     const [isOpenAddTabModal, setIsOpenAddTabModal] = useState(false);
     const [isOpenFilterModal, setIsOpenFilterModal] = useState(false);
+    const [isOpenSettingModal, setIsOpenSettingModal] = useState(false);
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const [linkSub, setLinkSub] = useState({});
     const [filterModelIndex, setFilterModelIndex] = useState(null);
     const [showProfiles, setShowProfiles] = useState(false);
     const [theme, setTheme] = useState(LIGHT);
-    const [tabs, setTabs] = useState([{url: 'relay.nostr.band', index: 0, filter: options[3]}]);
+    const [tabs, setTabs] = useState([{url: defaultGetAuthorsRelayUrl, index: 0, filter: options[3]}]);
+    const [getAuthorsRelayUrl, setGetAuthorsRelayUrl] = useState(defaultGetAuthorsRelayUrl);
 
     const ubiStateRef = useRef();
 
@@ -47,6 +51,9 @@ function App() {
     const closeFilterModal = () => {
         setIsOpenFilterModal(false);
     }
+
+    const openSettingModal = () => setIsOpenSettingModal(true);
+    const closeSettingModal = () => setIsOpenSettingModal(false);
 
     const changeActiveTab = (ind) => {
         setActiveTabIndex(ind);
@@ -73,6 +80,14 @@ function App() {
             changeFilter(newFilter, ind);
         } else {
             notify(WRONG_DATA);
+        }
+    };
+
+    const updateSettings = (data) => {
+        if (data.authorRelayUrl && data.authorRelayUrl !== '') {
+            if (!Nostr.relays.has(data.url)) {
+                connectToRelay(data.authorRelayUrl, () => setGetAuthorsRelayUrl(changeRelayName(data.authorRelayUrl)));
+            }
         }
     };
 
@@ -173,7 +188,7 @@ function App() {
                     Add relay
                 </button>
                 <button
-                    className={theme === DARK ? 'btn btn-dark' : 'btn btn-light'}
+                    className={theme === DARK ? 'btn btn-dark changeMode--button' : 'btn btn-light changeMode--button'  }
                     onClick={toggleTheme}
                 >
                     {theme === DARK ? (
@@ -181,6 +196,9 @@ function App() {
                     ) : (
                         <i className="bi bi-brightness-high"/>
                     )}
+                </button>
+                <button className="btn btn-primary settings--button" onClick={openSettingModal}>
+                    <i className="bi bi-gear"></i>
                 </button>
                 <div className="form-check showProfile--checkbox">
                     <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"
@@ -198,18 +216,25 @@ function App() {
                 tabs={tabs}
                 openFilterModal={openFilterModal}
                 showProfiles={showProfiles}
+                getAuthorsRelayUrl={getAuthorsRelayUrl}
             />
 
             {isOpenAddTabModal ? (
-                <Modal activeModal={isOpenAddTabModal} setActive={closeAddTabModal}>
-                    <GetForm setActive={closeAddTabModal} onSubmit={addTab}/>
-                </Modal>
+                <AddTabModal activeModal={isOpenAddTabModal} setActive={closeAddTabModal}>
+                    <AddTabForm setActive={closeAddTabModal} onSubmit={addTab}/>
+                </AddTabModal>
             ) : null}
 
             {isOpenFilterModal ? (
                 <FilterModal activeModal={isOpenFilterModal} setActive={closeFilterModal}>
                     <UpdateFilterForm setActive={closeFilterModal} onSubmit={updateFilter} index={filterModelIndex}/>
                 </FilterModal>
+            ) : null}
+
+            {isOpenSettingModal ? (
+                <SettingsModal activeModal={isOpenSettingModal} setActive={closeSettingModal}>
+                    <SettingsForm setActive={closeSettingModal} onSubmit={updateSettings}/>
+                </SettingsModal>
             ) : null}
 
             <ToastContainer/>

@@ -1,6 +1,4 @@
-import './Modal.scss';
-
-export const Modal = ({activeModal, setActive, children}) => {
+export const SettingsModal = ({activeModal, setActive, children}) => {
     return (
         <div className={activeModal ? 'modal active' : 'modal'} onClick={() => setActive(false)}
              onTouchMove={(e) => e.preventDefault()}>

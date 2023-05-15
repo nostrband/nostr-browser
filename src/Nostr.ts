@@ -92,7 +92,11 @@ const Nostr = {
   },
 
   getAuthors(url: string, filter: [], callback) {
-    const relay = this.relays.get(url);
+    let relay = this.relays.get(url);
+    if (!relay){
+      relay = relayInit(URL_PREFIX + url);
+    }
+
     const sub = relay.sub(filter);
 
     sub.on('event', (event: Event) => {

@@ -6,36 +6,31 @@ import '../variables.scss';
 import Nostr from '../Nostr';
 import { Messages } from './messages/Messages.jsx';
 import { changeRelayName } from '../utils/helpers';
-import { cash, pubKeys } from '../utils/options';
+import {cash, pubKeys} from '../utils/options';
 
-export const Relay = ({ url, ind, changeLinkSub, filterVal, showProfiles }) => {
+export const Relay = ({ url, ind, changeLinkSub, filterVal, showProfiles, getAuthorsRelayUrl }) => {
   const [messages, setMessages] = useState([]);
 
   const ubiStateRef = useRef();
 
   useEffect(() => {
-    if (ind === 0) {
-      connectToRelay(changeRelayName(url), () => {});
-      const sub = subscribeToRelay(changeRelayName(url), [
-        JSON.parse(filterVal),
-      ]);
-      changeLinkSub(sub, ind);
+    connectToRelay(changeRelayName(url), () => {
+    });
+    const sub = subscribeToRelay(changeRelayName(url), [
+      JSON.parse(filterVal),
+    ]);
+    changeLinkSub(sub, ind);
+
+    if (messages.length > 0) {
+      setMessages([])
     }
-    if (ind !== 0 && filterVal && filterVal !== '') {
-      connectToRelay(changeRelayName(url), () => {});
-      const sub = subscribeToRelay(changeRelayName(url), [
-        JSON.parse(filterVal),
-      ]);
-      changeLinkSub(sub, ind);
-    }
-    setMessages([]);
   }, [filterVal]);
 
   useEffect(() => {
     ubiStateRef.current = messages;
 
     if (pubKeys.length >= 5) {
-      subscribeToKind('relay.nostr.band', [
+      subscribeToKind(getAuthorsRelayUrl, [
         {
           kinds: [0],
           authors: [...pubKeys],
@@ -54,6 +49,9 @@ export const Relay = ({ url, ind, changeLinkSub, filterVal, showProfiles }) => {
       !pubKeys.includes(data.pubkey)
     ) {
       pubKeys.push(data.pubkey);
+    }
+    if (data.kind === 0) {
+      saveDataAuthors(data);
     }
   };
 
@@ -81,7 +79,9 @@ export const Relay = ({ url, ind, changeLinkSub, filterVal, showProfiles }) => {
           cash.delete(item);
         });
       }
-      cash.set(pubkey, content);
+      if (pubkey) {
+        cash.set(pubkey, content);
+      }
     }
   };
 
@@ -94,7 +94,7 @@ export const Relay = ({ url, ind, changeLinkSub, filterVal, showProfiles }) => {
       <br />
       <div id="messages" className="relay--container__messages">
         {messages.map((message) => (
-          <div className="messages" key={ind + message.id + ind}>
+          <div className="messages" key={ind + message.id + ind + "messageId"}>
             <Messages message={message} showProfiles={showProfiles} />
           </div>
         ))}

@@ -12,7 +12,8 @@ export const Tabs = ({
   tabs,
   openFilterModal,
   changeLinkSub,
-  showProfiles
+  showProfiles,
+  getAuthorsRelayUrl
 }) => {
   const [tabsView, setTabsView] = useState(true);
 
@@ -106,6 +107,7 @@ export const Tabs = ({
                         changeLinkSub={changeLinkSub}
                         filterVal={item.filter}
                         showProfiles={showProfiles}
+                        getAuthorsRelayUrl={getAuthorsRelayUrl}
                     />
                   </div>
                 ))}
@@ -175,6 +177,7 @@ export const Tabs = ({
                         changeLinkSub={changeLinkSub}
                         filterVal={item.filter}
                         showProfiles={showProfiles}
+                        getAuthorsRelayUrl={getAuthorsRelayUrl}
                     />
                   </div>
                 ))}

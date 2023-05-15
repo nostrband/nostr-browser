@@ -20,12 +20,7 @@ export const MessageHeader = ({ message, showProfiles }) => {
           {message.created_at}) Author:
           {showProfiles ? (
             <>
-              <img
-                src={picture}
-                alt="User avatar"
-                width={30}
-                className="me-2 ms-2"
-              />
+              <img src={picture} alt="" width={30} className="me-2 ms-2" />
               <span>{name}</span>
             </>
           ) : (

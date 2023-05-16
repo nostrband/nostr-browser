@@ -1,0 +1,9 @@
+.header--avatar {
+    display: flex;
+    flex-direction: row;
+}
+.header--avatar__img {
+    width: 10px;
+    height: 10px;
+    border-radius: 20px;
+}

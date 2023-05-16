@@ -6,6 +6,7 @@ import {MessageKind6} from "./MessageKind6.jsx";
 import {MessageKind7} from "./MessageKind7.jsx";
 import {MessageFooter} from './MessageFooter.jsx';
 import {MessageHeader} from "./MessageHeader.jsx";
+import { MessageKind0Header } from './MessageKind0Header.jsx';
 
 export const Messages = ({message}) => {
     const messagesMap = {

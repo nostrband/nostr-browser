@@ -1,7 +1,9 @@
-$colorInputFocus: rgba(19, 35, 47, 0.9);
+$colorInputFocus: rgba(19, 35, 47, 0.9); 
+$colorText: #ffffff;
 $border-radius: 15px;
-$fontFamily: 'Titillium Web', sans-serif;
-$basicFontSize: 25px;
-$normalFontSize: 1rem;
-$backgroundFields: rgb(0, 0, 0);
-$borderFields: 3px solid #352537;
+$fontFamily: 'Titillium Web', sans-serif; 
+$basicFontSize: 25px; 
+$margin-top: 20px; 
+$backgroundFields: rgb(0, 0, 0); 
+$width: 100%; //superfluous
+$borderFields: 3px solid #352537; //which component?

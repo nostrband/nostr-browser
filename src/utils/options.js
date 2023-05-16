@@ -10,6 +10,7 @@ export const options = [
 
 // export const pubKeys = {};
 export const defaultGetAuthorsRelayUrl = 'relay.nostr.band';
-export const pubKeys = [];
+export const authorsRelayUrl = { auth: null };
+export const pubKeys = {};
 
 export const cash = new Map();

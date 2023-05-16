@@ -1,8 +1,9 @@
 import React from 'react';
 import {useForm} from 'react-hook-form';
 import {options} from "../utils/options.js";
+import './Form.scss';
 
-function GetForm({setActive, onSubmit}) {
+function AddTabForm({setActive, onSubmit}) {
     const {handleSubmit, reset, register} = useForm();
 
     function onSubmitForm(data) {
@@ -38,4 +39,4 @@ function GetForm({setActive, onSubmit}) {
     );
 }
 
-export default GetForm;
+export default AddTabForm;

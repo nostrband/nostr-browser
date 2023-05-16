@@ -3,6 +3,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './Tabs.scss';
 import React, { useState } from 'react';
 import { changeRelayName } from '../../utils/helpers';
+import {Relay} from "../Relay.jsx";
 
 export const Tabs = ({
   active,
@@ -10,16 +11,20 @@ export const Tabs = ({
   closeTab,
   tabs,
   openFilterModal,
+  changeLinkSub,
+  showProfiles,
+  getAuthorsRelayUrl
 }) => {
   const [tabsView, setTabsView] = useState(true);
-  const openTab = (event) => changeActiveTab(+event.target.dataset.index);
 
-  const toggleTableView = () => setTabsView(!tabsView);
+  const openTab = (event) => changeActiveTab(+event.target.dataset.index);
 
   const close = (event, index) => {
     event.stopPropagation();
     closeTab(index);
   };
+
+  const toggleTableView = () => setTabsView(!tabsView);
 
   const openFilter = (event, index) => {
     event.stopPropagation();
@@ -96,7 +101,14 @@ export const Tabs = ({
                     role="tabpanel"
                     aria-labelledby="pills-home-tab"
                   >
-                    {item.relay}
+                    <Relay
+                        ind={item.index}
+                        url={item.url}
+                        changeLinkSub={changeLinkSub}
+                        filterVal={item.filter}
+                        showProfiles={showProfiles}
+                        getAuthorsRelayUrl={getAuthorsRelayUrl}
+                    />
                   </div>
                 ))}
               </div>
@@ -159,7 +171,14 @@ export const Tabs = ({
                       })`,
                     }}
                   >
-                    {item.relay}
+                    <Relay
+                        ind={item.index}
+                        url={item.url}
+                        changeLinkSub={changeLinkSub}
+                        filterVal={item.filter}
+                        showProfiles={showProfiles}
+                        getAuthorsRelayUrl={getAuthorsRelayUrl}
+                    />
                   </div>
                 ))}
               </div>

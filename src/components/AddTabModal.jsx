@@ -1,4 +1,4 @@
-import './AddTabModal.scss';
+import './Modal.scss';
 
 export const AddTabModal = ({activeModal, setActive, children}) => {
     return (

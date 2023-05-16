@@ -1,3 +1,5 @@
+import './Modal.scss';
+
 export const FilterModal = ({activeModal, setActive, children}) => {
     return (
         <div className={activeModal ? 'modal active' : 'modal'} onClick={() => setActive(false)}

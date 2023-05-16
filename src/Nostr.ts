@@ -1,6 +1,5 @@
-import { Relay, relayInit, Sub, nip19 } from 'nostr-tools';
+import { Relay, Sub, nip19, relayInit } from 'nostr-tools';
 import { toast } from 'react-toastify';
-import { cash } from './utils/options';
 
 const DEFAULT_RELAYS = [];
 const URL_PREFIX = 'wss://';
@@ -93,11 +92,15 @@ const Nostr = {
 
   getAuthors(url: string, filter: [], callback) {
     let relay = this.relays.get(url);
-    if (!relay){
+    if (!relay) {
       relay = relayInit(URL_PREFIX + url);
     }
-
     const sub = relay.sub(filter);
+    const subName = `${url} auth`;
+
+    if (this.subscriptions.get(url)) {
+      this.subscriptions.get(url).set(subName, sub);
+    }
 
     sub.on('event', (event: Event) => {
       callback(event);
@@ -105,6 +108,7 @@ const Nostr = {
 
     sub.on('eose', () => {
       sub.unsub();
+      this.subscriptions.get(url).delete(subName);
     });
 
     return sub;

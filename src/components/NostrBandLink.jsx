@@ -11,5 +11,5 @@ export const NostrBandLink = ({ postfix, value }) => {
     >
       {value}
     </a>
-  );
+  ); 
 };

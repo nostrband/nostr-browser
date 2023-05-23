@@ -24,6 +24,7 @@ export function changeRelayName(relay) {
 
 export const getAuthorData = (message) => {
   const data = cash.get(message.pubkey);
+  
 
   if (data) {
     const { name, display_name, picture } = JSON.parse(data);

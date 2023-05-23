@@ -2,7 +2,6 @@ import './Modal.scss';
 
 export const AddTabModal = ({activeModal, setActive, children}) => {
     return (
-        
         <div className={activeModal ? 'modal active' : 'modal'} onClick={() => setActive(false)}
              onTouchMove={(e) => e.preventDefault()}>
             <div className="modal-dialog">
@@ -10,10 +9,9 @@ export const AddTabModal = ({activeModal, setActive, children}) => {
                      onClick={(e) => e.stopPropagation()}>
                     <div className="modal-body">
                         {children}
-                        
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
     );
 };

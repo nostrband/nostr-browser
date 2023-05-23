@@ -9,9 +9,10 @@ export const MessageHeader = ({ message, showProfiles }) => {
   const formatDate = (createdAt) => {
     return moment(createdAt * 1000).format('YYYY-MM-DD HH:mm:SS');
   };
+
   const { name, picture } = getAuthorData(message);
 
-  return ( 
+  return (
     <>
       {message && (
         <p className="card-header">
@@ -26,12 +27,10 @@ export const MessageHeader = ({ message, showProfiles }) => {
           ) : (
             <NostrBandLink
               postfix={Nostr.encodeAuthorPubKey(message.pubkey)}
-              value={message.pubkey} 
-            /> 
+              value={message.pubkey}
+            />
           )}
-       
         </p>
-        
       )}
     </>
   );

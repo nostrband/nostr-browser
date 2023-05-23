@@ -16,8 +16,9 @@ export const MessageHeader = ({ message, showProfiles }) => {
     <>
       {message && (
         <p className="card-header">
-          Kind: {message.kind} CreatedAt: {formatDate(message.created_at)} (
-          {message.created_at}) Author:
+          Kind: {message.kind} CreatedAt: {formatDate(message.created_at)} ({message.created_at}) <br />
+          ID: <NostrBandLink postfix={Nostr.encodeEventId(message.id)} value={message.id}/>  <br />
+          Author:&nbsp;
           {showProfiles ? (
             <>
               <img src={picture} alt="" width={30} className="me-2 ms-2" />

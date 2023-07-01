@@ -4,7 +4,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {defaultGetAuthorsRelayUrl, options} from './utils/options';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-
 import './App.scss';
 import './variables.scss';
 import {AddTabModal} from './components/AddTabModal.jsx';
@@ -33,7 +32,6 @@ function App() {
     const [theme, setTheme] = useState(LIGHT);
     const [tabs, setTabs] = useState([{url: defaultGetAuthorsRelayUrl, index: 0, filter: options[3]}]);
     const [getAuthorsRelayUrl, setGetAuthorsRelayUrl] = useState(defaultGetAuthorsRelayUrl);
-
     const ubiStateRef = useRef();
 
     useEffect(() => {
@@ -42,6 +40,10 @@ function App() {
 
     const openAddTabModal = () => setIsOpenAddTabModal(true);
     const closeAddTabModal = () => setIsOpenAddTabModal(false);
+    
+    const onopenFilterModal = (index) => {
+        console.log('he denis', index)
+    };
 
     const openFilterModal = (index) => {
         setFilterModelIndex(index);
@@ -187,6 +189,7 @@ function App() {
                 <button className="btn btn-primary main--button" onClick={openAddTabModal}>
                     Add relay
                 </button>
+                
                 <button
                     className={theme === DARK ? 'btn btn-dark changeMode--button' : 'btn btn-light changeMode--button'  }
                     onClick={toggleTheme}
@@ -217,6 +220,7 @@ function App() {
                 openFilterModal={openFilterModal}
                 showProfiles={showProfiles}
                 getAuthorsRelayUrl={getAuthorsRelayUrl}
+                onopenFilterModal = {onopenFilterModal}
             />
 
             {isOpenAddTabModal ? (
@@ -239,8 +243,10 @@ function App() {
 
             <ToastContainer/>
             <ScrolltoTop/>
+            
         </div>
     );
 }
 
 export default App;
+ 

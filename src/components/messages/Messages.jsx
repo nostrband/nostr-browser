@@ -19,6 +19,8 @@ export const Messages = ({message, showProfiles}) => {
     return (
         <div className="card">
             <MessageHeader message={message} showProfiles={showProfiles}/>
+            
+
             <div className="card-body">
                 {messagesMap[message.kind] ? (
                     messagesMap[message.kind]

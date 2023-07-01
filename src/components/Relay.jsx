@@ -11,6 +11,8 @@ import { Messages } from './messages/Messages.jsx';
 export const Relay = ({ url, ind, changeLinkSub, filterVal, showProfiles }) => {
   const [messages, setMessages] = useState([]);
   const ubiStateRef = useRef();
+ 
+
 
   useEffect(() => {
     connectToRelay(changeRelayName(url), () => {});
@@ -104,6 +106,7 @@ export const Relay = ({ url, ind, changeLinkSub, filterVal, showProfiles }) => {
         {messages.map((message) => (
           <div className="messages" key={ind + message.id + ind + 'messageId'}>
             <Messages message={message} showProfiles={showProfiles} />
+           
           </div>
         ))}
       </div>

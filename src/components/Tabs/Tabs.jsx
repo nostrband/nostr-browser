@@ -1,9 +1,10 @@
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import './Tabs.scss';
-import React, { useState } from 'react';
+import React, { useState,useRef, useEffect } from 'react';
 import { changeRelayName } from '../../utils/helpers';
 import {Relay} from "../Relay.jsx";
+import AddInput from '../AddInput';
 
 export const Tabs = ({
   active,
@@ -13,18 +14,31 @@ export const Tabs = ({
   openFilterModal,
   changeLinkSub,
   showProfiles,
-  getAuthorsRelayUrl
+  getAuthorsRelayUrl,
+  onopenFilterModal,
 }) => {
   const [tabsView, setTabsView] = useState(true);
+  const [text,setText] = useState()
 
   const openTab = (event) => changeActiveTab(+event.target.dataset.index);
 
   const close = (event, index) => {
     event.stopPropagation();
     closeTab(index);
-  };
+  }; 
+ 
+  const button = useRef(null)
 
+  const onpressClick = (event) => {
+    event.preventDefault()
+    setText('new text')
+
+  }
+  useEffect(()=> {
+    button.current.addEventListener('click', onpressClick)
+  },[])
   const toggleTableView = () => setTabsView(!tabsView);
+  
 
   const openFilter = (event, index) => {
     event.stopPropagation();
@@ -35,6 +49,8 @@ export const Tabs = ({
     return (tabs.length - 1) * 10;
   };
 
+ 
+  
   return (
     <>
       {tabs.length > 0 && (
@@ -42,7 +58,10 @@ export const Tabs = ({
           <button
             className="btn btn-primary changeStyle--button"
             onClick={toggleTableView}
-          >
+          >   
+          <button onClick ={() => onopenFilterModal ('press1')}>press</button>
+          <button ref ={button}>button</button>
+          
             {tabsView ? (
               <i className="bi bi-layout-three-columns"></i>
             ) : (
@@ -186,6 +205,8 @@ export const Tabs = ({
           )}
         </div>
       )}
+  <AddInput onopenFilterModal = {onopenFilterModal}/>
+  <p>{text}</p>
     </>
   );
 };

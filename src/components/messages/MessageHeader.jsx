@@ -18,7 +18,8 @@ export const MessageHeader = ({ message, showProfiles }) => {
       {message && (
         <p className="card-header">
           Kind: {message.kind} CreatedAt: {formatDate(message.created_at)} (
-          {message.created_at}) ID: <a href = {'https://nostr.band/' + message.pubkey } target = 'blank'>{message.pubkey}</a> <br />
+          {message.created_at}) <br /> 
+          ID: <NostrBandLink postfix = {Nostr.encodeEventId(message.id) } value = {message.id} /> <br />
           Author:
           {showProfiles ? (
             <>
